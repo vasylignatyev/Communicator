@@ -1,0 +1,260 @@
+package biz.atelecom.communicator;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import biz.atelecom.communicator.adapters.MyMessagesRecyclerViewAdapter;
+import biz.atelecom.communicator.ajax.HTTPManager;
+import biz.atelecom.communicator.ajax.RequestPackage;
+import biz.atelecom.communicator.dummy.DummyContent.DummyItem;
+import biz.atelecom.communicator.models.Message;
+
+/**
+ * A fragment representing a list of Items.
+ * <p/>
+ * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * interface.
+ */
+public class MessagesFragment extends Fragment {
+
+    // TODO: Customize parameter argument names
+    private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_PHONE_TO = "phone-to";
+    private static final String ARG_PHONE_FROM = "phone-from";
+    // TODO: Customize parameters
+    private int mColumnCount = 1;
+
+    private String mPhoneTo;
+    //private String mPhoneFrom;
+
+    private EditText etMessage;
+
+    private ProgressDialog pg;
+
+    private final ArrayList<Message> mMessageList = new ArrayList<>();
+
+    private RecyclerView mRecyclerView;
+
+    private OnListFragmentInteractionListener mListener;
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public MessagesFragment() {
+    }
+
+    // TODO: Customize parameter initialization
+    @SuppressWarnings("unused")
+    public static MessagesFragment newInstance(int columnCount, String phoneTo) {
+        MessagesFragment fragment = new MessagesFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        //args.putString(ARG_PHONE_FROM, phoneFrom);
+        args.putString(ARG_PHONE_TO, phoneTo);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT, 1);
+            mPhoneTo = getArguments().getString(ARG_PHONE_TO, null);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_messages_list, container, false);
+
+        // Set the adapter
+        if (view instanceof RecyclerView) {
+            Context context = view.getContext();
+            RecyclerView recyclerView = (RecyclerView) view;
+            if (mColumnCount <= 1) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            } else {
+                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            }
+            //recyclerView.setAdapter(new MyMessagesRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+        }
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        etMessage = (EditText) view.findViewById(R.id.etMessage);
+        final Button btSend = (Button) view.findViewById(R.id.btSend);
+        final Button btRefresh = (Button) view.findViewById(R.id.btRefresh);
+
+        btSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = etMessage.getText().toString();
+                if(message.length() > 0){
+                    sendMessage(message);
+                }
+            }
+        });
+
+        btRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMessageList();
+            }
+        });
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        if(toolbar != null) {
+            toolbar.setTitle((mPhoneTo == null) ? "(Empty)" : mPhoneTo);
+        }
+        if(mPhoneTo != null) {
+            getMessageList();
+        }
+
+        return view;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        pg = new ProgressDialog(context);
+        pg.setMessage("Wait please ...");
+        pg.setTitle("Connecting to server");
+       /*
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+        */
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onListFragmentInteraction(DummyItem item);
+    }
+
+    /**
+     *  ASYNC TASKS
+     */
+    private void getMessageList() {
+        RequestPackage rp = new RequestPackage( MainActivity.AJAX );
+        rp.setMethod("GET");
+        rp.setParam("functionName", "get_message_list");
+        rp.setParam("numberA", MainActivity.getNumber());
+        rp.setParam("numberB", mPhoneTo);
+        pg.show();
+
+        GetMessageListAsyncTask task = new GetMessageListAsyncTask();
+        task.execute(rp);
+    }
+
+    private class GetMessageListAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "GetMessageListAsyncTask:" + s);
+            Message message;
+            JSONObject jObj;
+            try {
+                JSONArray jArray = new JSONArray(s);
+                for (int i = 0; i < jArray.length(); i++) {
+                    jObj = jArray.getJSONObject(i);
+                    message = new Message();
+                    if( jObj.has("I_MESSAGE")){
+                        message.iMessage = jObj.getInt("I_MESSAGE");
+                    }
+                    if( jObj.has("FROM")){
+                        message.from = jObj.getString("FROM");
+                    }
+                    if( jObj.has("TO")){
+                        message.to = jObj.getString("TO");
+                    }
+                    if( jObj.has("BODY")){
+                        message.body = jObj.getString("BODY");
+                    }
+                    mMessageList.add(message);
+                }
+                mRecyclerView.setAdapter(new MyMessagesRecyclerViewAdapter(mMessageList));
+                mRecyclerView.scrollToPosition(mMessageList.size() - 1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                pg.hide();
+            }
+        }
+    }
+    private void sendMessage(String body) {
+        RequestPackage rp = new RequestPackage( MainActivity.AJAX );
+        if(mPhoneTo == null ) {
+            return;
+        }
+        rp.setMethod("GET");
+        rp.setParam("functionName", "send_message");
+        rp.setParam("from", MainActivity.getNumber() );
+        rp.setParam("to", mPhoneTo);
+        rp.setParam("body", body);
+        pg.show();
+
+        SendMessageAsyncTask task = new SendMessageAsyncTask();
+        task.execute(rp);
+    }
+
+    private class SendMessageAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "GetMessageListAsyncTask:" + s);
+            etMessage.setText("");
+            pg.hide();
+            getMessageList();
+        }
+    }
+
+}
+

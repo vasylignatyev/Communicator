@@ -1,0 +1,104 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="biz.atelecom.communicator.LoginFragment">
+
+     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|top"
+         android:background="#FFFFFF">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivLogo"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:src="@drawable/sym_def_app_icon" />
+
+        <LinearLayout
+         android:orientation="horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:text="@string/phone_number"
+             android:id="@+id/tvPhoneNumber" />
+
+         <EditText
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:id="@+id/tePhoneNumber"
+             android:hint="123456"
+             android:text="770075"
+             android:inputType="numberDecimal" />
+        </LinearLayout>
+
+        <LinearLayout
+         android:orientation="horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:text="@string/password"
+             android:id="@+id/tvPassword" />
+
+         <EditText
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:inputType="textPassword"
+             android:digits="0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM"
+             android:hint="passsword"
+             android:text="iskra1973"
+             android:ems="10"
+             android:id="@+id/tePassword" />
+
+        </LinearLayout>
+
+         <CheckBox
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Show password"
+             android:id="@+id/cbShowPassword" />
+
+         <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+             <Button
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Login"
+                 android:id="@+id/btLogin" />
+
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:textAppearance="?android:attr/textAppearanceMedium"
+                 android:text="Fogot password"
+                 android:id="@+id/tvFogotPassword"
+                 android:autoText="false"
+                 android:clickable="true"
+                 android:gravity="center_horizontal" />
+
+         </LinearLayout>
+
+
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Registration"
+             android:id="@+id/btRegistration" />
+
+     </LinearLayout>
+
+</FrameLayout>

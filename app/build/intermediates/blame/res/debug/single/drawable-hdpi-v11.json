@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v11\\ic_stat_ic_notification.png",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-hdpi-v11\\ic_stat_ic_notification.png"
+    },
+    {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v11\\ic_stat_lanch.png",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-hdpi-v11\\ic_stat_lanch.png"
+    }
+]

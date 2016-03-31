@@ -208,6 +208,10 @@
         "source": "E:\\Android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-xxxhdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png"
     },
     {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4\\ic_contacts.png",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-xxxhdpi\\ic_contacts.png"
+    },
+    {
         "merged": "E:\\Android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png",
         "source": "E:\\Android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-xxxhdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png"
     },

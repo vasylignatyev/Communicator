@@ -88,6 +88,10 @@
         "source": "C:\\android\\Atlantis\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\drawable-mdpi-v4\\abc_ic_star_half_black_16dp.png"
     },
     {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\ic_contacts.png",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-mdpi\\ic_contacts.png"
+    },
+    {
         "merged": "E:\\Android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\abc_list_selector_disabled_holo_light.9.png",
         "source": "E:\\Android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-mdpi-v4\\abc_list_selector_disabled_holo_light.9.png"
     },

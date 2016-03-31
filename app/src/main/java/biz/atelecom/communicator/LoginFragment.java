@@ -211,7 +211,7 @@ public class LoginFragment extends Fragment {
                     boolean result = obj.getBoolean("result");
                     if (result) {
                         FragmentManager fm = mFragmentActivity.getSupportFragmentManager();
-                        Fragment messagesFragment = ContactItemFragment.newInstance( 1);
+                        Fragment messagesFragment = MessagesFragment.newInstance(1);
                         fm.beginTransaction().replace(R.id.container, messagesFragment).commit();
                     } else {
                         Toast.makeText(mContext, "Wrong number or password!!!", Toast.LENGTH_LONG).show();

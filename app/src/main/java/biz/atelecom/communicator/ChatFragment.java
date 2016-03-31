@@ -22,7 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import biz.atelecom.communicator.adapters.MyMessagesRecyclerViewAdapter;
+import biz.atelecom.communicator.adapters.ChatRecyclerViewAdapter;
 import biz.atelecom.communicator.ajax.HTTPManager;
 import biz.atelecom.communicator.ajax.RequestPackage;
 import biz.atelecom.communicator.dummy.DummyContent.DummyItem;
@@ -99,7 +99,7 @@ public class ChatFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            //recyclerView.setAdapter(new MyMessagesRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            //recyclerView.setAdapter(new ChatRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
         etMessage = (EditText) view.findViewById(R.id.etMessage);
@@ -217,7 +217,7 @@ public class ChatFragment extends Fragment {
                     }
                     mMessageList.add(message);
                 }
-                mRecyclerView.setAdapter(new MyMessagesRecyclerViewAdapter(mMessageList));
+                mRecyclerView.setAdapter(new ChatRecyclerViewAdapter(mMessageList));
                 mRecyclerView.scrollToPosition(mMessageList.size() - 1);
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -388,6 +388,10 @@
         "source": "C:\\android\\Communicator\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png"
     },
     {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_contacts.png",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-xhdpi\\ic_contacts.png"
+    },
+    {
         "merged": "E:\\Android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
         "source": "E:\\Android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
     },

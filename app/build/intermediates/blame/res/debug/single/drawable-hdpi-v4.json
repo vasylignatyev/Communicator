@@ -136,6 +136,10 @@
         "source": "C:\\android\\Communicator\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.1.0\\res\\drawable-hdpi\\common_signin_btn_text_normal_light.9.png"
     },
     {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_contacts.png",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-hdpi\\ic_contacts.png"
+    },
+    {
         "merged": "C:\\android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png",
         "source": "C:\\android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\drawable-hdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png"
     },

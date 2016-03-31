@@ -85,7 +85,7 @@ public class ContactItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            //recyclerView.setAdapter(new MyContactItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            //recyclerView.setAdapter(new ContactItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }

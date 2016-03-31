@@ -18,8 +18,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="biz.atelecom.communicator.MessagesFragment"
-        tools:listitem="@layout/fragment_messages"
+        tools:context=".ChatFragment"
+        tools:listitem="@layout/chat_item"
         android:layout_weight="1" />
 
 

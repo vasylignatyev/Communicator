@@ -24,8 +24,6 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import biz.atelecom.communicator.ajax.RequestPackage;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LoginFragment.OnLoginInteractionListener {
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity
                 newFragment = ContactItemFragment.newInstance(1);
                 break;
             case R.id.nav_messages:
-                newFragment = MessagesFragment.newInstance(1, null);
+                newFragment = ChatFragment.newInstance(1, null);
                 break;
             default:
                 newFragment = ContactItemFragment.newInstance(1);

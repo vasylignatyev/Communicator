@@ -34,7 +34,7 @@ import biz.atelecom.communicator.models.Message;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class MessagesFragment extends Fragment {
+public class ChatFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -60,13 +60,13 @@ public class MessagesFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public MessagesFragment() {
+    public ChatFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static MessagesFragment newInstance(int columnCount, String phoneTo) {
-        MessagesFragment fragment = new MessagesFragment();
+    public static ChatFragment newInstance(int columnCount, String phoneTo) {
+        ChatFragment fragment = new ChatFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         //args.putString(ARG_PHONE_FROM, phoneFrom);
@@ -88,7 +88,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_messages_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {

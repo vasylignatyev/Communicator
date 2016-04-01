@@ -4,9 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +16,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import biz.atelecom.communicator.adapters.ChatRecyclerViewAdapter;
 import biz.atelecom.communicator.adapters.MessageItemRecyclerViewAdapter;
 import biz.atelecom.communicator.ajax.HTTPManager;
 import biz.atelecom.communicator.ajax.RequestPackage;
-import biz.atelecom.communicator.dummy.DummyContent.DummyItem;
-import biz.atelecom.communicator.models.Message;
 import biz.atelecom.communicator.models.MessageStat;
 
 public class MessagesFragment extends Fragment {
@@ -32,9 +29,9 @@ public class MessagesFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private OnMessageListFragmentListener mListener;
 
-    private  ArrayList<MessageStat> mMessageStatList = null;
+    private  List<MessageStat> mMessageStatList = null;
 
     private RecyclerView mRecyclerView;
 
@@ -59,11 +56,17 @@ public class MessagesFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
         getMessageStat();
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        if(toolbar != null) {
+            toolbar.setTitle("Messages");
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_messages, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
@@ -75,13 +78,12 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnMessageListFragmentListener) {
+            mListener = (OnMessageListFragmentListener) context;
         } else {
-            /*
+
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-                    */
+                    + " must implement OnMessageListFragmentListener");
         }
     }
 
@@ -91,19 +93,9 @@ public class MessagesFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
+     public interface OnMessageListFragmentListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(MessageStat item);
+        void onMessageStatClick(MessageStat item);
     }
 
     /**
@@ -150,12 +142,11 @@ public class MessagesFragment extends Fragment {
                     }
                     mMessageStatList.add(messageStat);
                 }
-                mRecyclerView.setAdapter(new MessageItemRecyclerViewAdapter(mMessageStatList));
+                mRecyclerView.setAdapter(new MessageItemRecyclerViewAdapter(mMessageStatList, mListener));
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
-
 }

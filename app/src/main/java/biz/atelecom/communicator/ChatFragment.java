@@ -20,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import biz.atelecom.communicator.adapters.ChatRecyclerViewAdapter;
@@ -36,15 +38,14 @@ import biz.atelecom.communicator.models.Message;
  */
 public class ChatFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String ARG_PHONE_TO = "phone-to";
-    private static final String ARG_PHONE_FROM = "phone-from";
-    // TODO: Customize parameters
+    public static final String ARG_COLUMN_COUNT = "column-count";
+    public static final String ARG_PHONE_TO = "numberB";
+    public static final String ARG_PHONE_FROM = "numberA";
+
     private int mColumnCount = 1;
 
+    private String mPhoneFrom;
     private String mPhoneTo;
-    //private String mPhoneFrom;
 
     private EditText etMessage;
 
@@ -56,6 +57,8 @@ public class ChatFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
 
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -65,11 +68,14 @@ public class ChatFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ChatFragment newInstance(int columnCount, String phoneTo) {
+    public static ChatFragment newInstance(String phoneFrom , String phoneTo) {
+        Log.d("MyApp", "ChatFragment.newInstance");
+        Log.d("MyApp", "ChatActivity PHONE_FROM: " + phoneFrom);
+        Log.d("MyApp", "ChatActivity PHONE_TO: " + phoneTo);
+
         ChatFragment fragment = new ChatFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        //args.putString(ARG_PHONE_FROM, phoneFrom);
+        args.putString(ARG_PHONE_FROM, phoneFrom);
         args.putString(ARG_PHONE_TO, phoneTo);
         fragment.setArguments(args);
         return fragment;
@@ -81,6 +87,7 @@ public class ChatFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT, 1);
+            mPhoneFrom = getArguments().getString(ARG_PHONE_FROM, null);
             mPhoneTo = getArguments().getString(ARG_PHONE_TO, null);
         }
     }
@@ -143,11 +150,11 @@ public class ChatFragment extends Fragment {
         pg.setMessage("Wait please ...");
         pg.setTitle("Connecting to server");
        /*
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnMessageListFragmentListener) {
+            mListener = (OnMessageListFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnMessageListFragmentListener");
         }
         */
     }
@@ -180,7 +187,7 @@ public class ChatFragment extends Fragment {
         RequestPackage rp = new RequestPackage( MainActivity.AJAX );
         rp.setMethod("GET");
         rp.setParam("functionName", "get_message_list");
-        rp.setParam("numberA", MainActivity.getNumber());
+        rp.setParam("numberA", mPhoneFrom);
         rp.setParam("numberB", mPhoneTo);
         pg.show();
 
@@ -196,6 +203,9 @@ public class ChatFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "GetMessageListAsyncTask:" + s);
+
+
+
             Message message;
             JSONObject jObj;
             try {
@@ -215,11 +225,20 @@ public class ChatFragment extends Fragment {
                     if( jObj.has("BODY")){
                         message.body = jObj.getString("BODY");
                     }
+                    if( jObj.has("ISSUE_DATE")){
+                         message.issueDate = sdf.parse( jObj.getString("ISSUE_DATE") );
+                    }
+                    if( jObj.has("VIEWED")){
+                        message.viewed = (jObj.getInt("VIEWED") == 1);
+                    }
                     mMessageList.add(message);
                 }
                 mRecyclerView.setAdapter(new ChatRecyclerViewAdapter(mMessageList));
                 mRecyclerView.scrollToPosition(mMessageList.size() - 1);
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                Log.d("MyApp", "Prser error" + e.getMessage());
                 e.printStackTrace();
             } finally {
                 pg.hide();
@@ -233,8 +252,8 @@ public class ChatFragment extends Fragment {
         }
         rp.setMethod("GET");
         rp.setParam("functionName", "send_message");
-        rp.setParam("from", MainActivity.getNumber() );
-        rp.setParam("to", mPhoneTo);
+        rp.setParam("numberA", mPhoneFrom  );
+        rp.setParam("numberB", mPhoneTo);
         rp.setParam("body", body);
         pg.show();
 
@@ -255,6 +274,5 @@ public class ChatFragment extends Fragment {
             getMessageList();
         }
     }
-
 }
 

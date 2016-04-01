@@ -24,9 +24,11 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import biz.atelecom.communicator.models.MessageStat;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        LoginFragment.OnLoginInteractionListener {
+        LoginFragment.OnLoginInteractionListener, MessagesFragment.OnMessageListFragmentListener {
 
     public static final String AJAX = "http://psoap.atlantistelecom.net/android/ajax.php";
 
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity
                 newFragment = ContactItemFragment.newInstance(1);
                 break;
             case R.id.nav_messages:
-                newFragment = ChatFragment.newInstance(1, null);
+                newFragment = MessagesFragment.newInstance(1);
                 break;
             default:
                 newFragment = ContactItemFragment.newInstance(1);
@@ -190,4 +192,13 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onMessageStatClick(MessageStat item) {
+        Log.d("MyApp", "Click1 on: " + item.id);
+
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra(ChatFragment.ARG_PHONE_FROM, getNumber());
+        intent.putExtra(ChatFragment.ARG_PHONE_TO, item.id);
+        startActivity(intent);
+    }
 }

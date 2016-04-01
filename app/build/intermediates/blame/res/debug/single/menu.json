@@ -30,5 +30,9 @@
     {
         "merged": "C:\\android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\menu\\activity_main_drawer.xml",
         "source": "C:\\android\\Atelecom\\app\\src\\main\\res\\menu\\activity_main_drawer.xml"
+    },
+    {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_chart.xml",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\menu\\menu_chart.xml"
     }
 ]

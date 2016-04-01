@@ -63,7 +63,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a Message was received.
          */
-        sendNotification(message);
+        sendNotification(data);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -73,9 +73,11 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM Message received.
      */
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void sendNotification(Bundle data) {
+        Intent intent = new Intent(this, ChatActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtras(data);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
@@ -83,7 +85,7 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.atelecom_ic_notification)
                 .setContentTitle("Atelecom Message")
-                .setContentText(message)
+                .setContentText("message")
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

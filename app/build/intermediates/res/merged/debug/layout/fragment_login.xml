@@ -34,8 +34,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:id="@+id/tePhoneNumber"
-             android:hint="123456"
-             android:text="770075"
+             android:hint="number"
              android:inputType="numberDecimal" />
         </LinearLayout>
 
@@ -57,7 +56,6 @@
              android:inputType="textPassword"
              android:digits="0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM"
              android:hint="passsword"
-             android:text="iskra1973"
              android:ems="10"
              android:id="@+id/tePassword" />
 

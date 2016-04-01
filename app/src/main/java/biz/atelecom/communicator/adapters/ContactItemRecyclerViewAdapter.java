@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-//import biz.atelecom.atelecom.ItemFragment.OnListFragmentInteractionListener;
+//import biz.atelecom.atelecom.ItemFragment.OnMessageListFragmentListener;
 import biz.atelecom.communicator.R;
 import biz.atelecom.communicator.dummy.DummyContent.DummyItem;
 
@@ -16,9 +16,9 @@ public class ContactItemRecyclerViewAdapter extends RecyclerView.Adapter<Contact
 
     private final List<DummyItem> mValues = null;
 /*
-    private final OnListFragmentInteractionListener mListener;
+    private final OnMessageListFragmentListener mListener;
 
-    public ContactItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public ContactItemRecyclerViewAdapter(List<DummyItem> items, OnMessageListFragmentListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -43,7 +43,7 @@ public class ContactItemRecyclerViewAdapter extends RecyclerView.Adapter<Contact
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onMessageStatClick(holder.mItem);
                 }
                 */
             }

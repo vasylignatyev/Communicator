@@ -1,6 +1,7 @@
 package biz.atelecom.communicator.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,13 @@ import java.util.List;
 public class MessageItemRecyclerViewAdapter extends RecyclerView.Adapter<MessageItemRecyclerViewAdapter.ViewHolder> {
 
     private List<MessageStat> mValues = null;
-    private final MessagesFragment.OnListFragmentInteractionListener mListener;
+    private final MessagesFragment.OnMessageListFragmentListener mListener;
 
-    public MessageItemRecyclerViewAdapter(List<MessageStat> items, MessagesFragment.OnListFragmentInteractionListener listener) {
+    public MessageItemRecyclerViewAdapter(List<MessageStat> items, MessagesFragment.OnMessageListFragmentListener listener) {
         mValues = items;
         mListener = listener;
      }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,9 +43,13 @@ public class MessageItemRecyclerViewAdapter extends RecyclerView.Adapter<Message
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             if (null != mListener) {
-                mListener.onListFragmentInteraction(holder.mItem);
-            }
+
+                TextView tvContactId = (TextView) v.findViewById(R.id.tvContactId);
+
+
+                if (null != mListener) {
+                    mListener.onMessageStatClick(holder.mItem);
+                }
             }
         });
     }

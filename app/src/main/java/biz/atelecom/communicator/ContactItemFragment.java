@@ -68,7 +68,7 @@ public class ContactItemFragment extends Fragment {
             public void onClick(View v) {
                 String phoneStr = et_phone.getText().toString();
                 phoneStr = (phoneStr.length() == 0) ? null : ("380894" + phoneStr);
-                Fragment fr = ChatFragment.newInstance(1, phoneStr);
+                Fragment fr = ChatFragment.newInstance(MainActivity.getNumber(), phoneStr);
 
                 //FragmentManager fm =getActivity().getSupportFragmentManager();
 
@@ -95,11 +95,11 @@ public class ContactItemFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         /*
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnMessageListFragmentListener) {
+            mListener = (OnMessageListFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnMessageListFragmentListener");
         }
         */
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);

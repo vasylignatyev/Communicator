@@ -351,6 +351,7 @@
     <string name="password">Password:</string>
     <string name="phone_number">Phone number: +380894</string>
     <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="title_activity_chart">Chart</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>

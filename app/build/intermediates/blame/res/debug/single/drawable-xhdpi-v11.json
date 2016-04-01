@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v11\\atelecom_ic_notification.png",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-xhdpi-v11\\atelecom_ic_notification.png"
+    },
+    {
         "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v11\\ic_stat_lanch.png",
         "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-xhdpi-v11\\ic_stat_lanch.png"
     },

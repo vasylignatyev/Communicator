@@ -176,10 +176,6 @@
         "source": "E:\\Android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_navigation_item_separator.xml"
     },
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_main.xml",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\layout\\content_main.xml"
-    },
-    {
         "merged": "E:\\Android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines.xml",
         "source": "E:\\Android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_template_lines.xml"
     },
@@ -224,16 +220,16 @@
         "source": "C:\\android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\layout\\abc_screen_content_include.xml"
     },
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\messages_item.xml",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\layout\\messages_item.xml"
+        "merged": "C:\\android\\Atlantis\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_main.xml",
+        "source": "C:\\android\\Atlantis\\app\\src\\main\\res\\layout\\content_main.xml"
     },
     {
         "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_contactitem_list.xml",
         "source": "C:\\android\\Communicator\\app\\src\\main\\res\\layout\\fragment_contactitem_list.xml"
     },
     {
-        "merged": "C:\\android\\Atlantis\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_main.xml",
-        "source": "C:\\android\\Atlantis\\app\\src\\main\\res\\layout\\content_main.xml"
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\messages_item.xml",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\layout\\messages_item.xml"
     },
     {
         "merged": "E:\\Android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
@@ -802,6 +798,10 @@
     {
         "merged": "E:\\Android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_contactitem.xml",
         "source": "E:\\Android\\Atelecom\\app\\src\\main\\res\\layout\\fragment_contactitem.xml"
+    },
+    {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_chat.xml",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\layout\\activity_chat.xml"
     },
     {
         "merged": "C:\\android\\Atlantis\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",

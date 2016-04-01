@@ -1,24 +1,28 @@
 package biz.atelecom.communicator.adapters;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-//import biz.atelecom.atelecom.ItemFragment.OnListFragmentInteractionListener;
+//import biz.atelecom.atelecom.ItemFragment.OnMessageListFragmentListener;
 import biz.atelecom.communicator.R;
 import biz.atelecom.communicator.models.Message;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ViewHolder> {
 
     private List<Message> mValues = null;
-/*
-    private final OnListFragmentInteractionListener mListener;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
-    public ChatRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+/*
+    private final OnMessageListFragmentListener mListener;
+
+    public ChatRecyclerViewAdapter(List<DummyItem> items, OnMessageListFragmentListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,10 +40,16 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.tvFrom.setText(mValues.get(position).from);
-        holder.tvTo.setText(mValues.get(position).to);
-        holder.tvMessage.setText(mValues.get(position).body);
+        Message msg = mValues.get(position);
+        holder.mItem = msg;
+        holder.tvFrom.setText(msg.from);
+        holder.tvTo.setText(msg.to);
+        holder.tvMessage.setText(msg.body);
+        holder.tvDate.setText(sdf.format(msg.issueDate));
+
+        if(!msg.viewed) {
+            holder.tvMessage.setTypeface(null, Typeface.BOLD);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +58,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onMessageStatClick(holder.mItem);
                 }
                 */
             }
@@ -63,24 +73,20 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public final View mView;
-        /*
-        public final TextView mIdView;
-        public final TextView mContentView;
-        */
         public Message mItem;
         public final TextView tvFrom;
         public final TextView tvTo;
         public final TextView tvMessage;
+        public final TextView tvDate;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            //mIdView = (TextView) view.findViewById(R.id.id);
-            //mContentView = (TextView) view.findViewById(R.id.content);
-
             tvFrom = (TextView) view.findViewById(R.id.tvFrom);
             tvTo = (TextView) view.findViewById(R.id.tvTo);
             tvMessage = (TextView) view.findViewById(R.id.tvMessage);
+            tvDate = (TextView) view.findViewById(R.id.tvDate);
+
         }
 
         @Override

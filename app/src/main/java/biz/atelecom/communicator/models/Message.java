@@ -11,4 +11,5 @@ public class Message {
     public String to;
     public String body;
     public Date issueDate;
+    public Boolean viewed;
 }

@@ -345,11 +345,10 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="gcm_defaultSenderId" translatable="false">715923435725</string>
     <string name="google_app_id" translatable="false">1:715923435725:android:01175acf22302be5</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="password">Password:</string>
-    <string name="phone_number">Phone number: +380894</string>
+    <string name="number_hint">Number</string>
+    <string name="password_hint">Passsword</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <string name="title_activity_chart">Chart</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

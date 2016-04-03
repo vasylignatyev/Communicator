@@ -10,9 +10,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -44,7 +46,13 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    static private String mNumber;
+    EditText mTePhoneNumber;
+    EditText mTePassword;
+    CheckBox mCbShowPassword;
+
+    String mTePhoneNumberStr;
+
+    private String mNumber;
 
 
     private Context mContext;
@@ -52,6 +60,10 @@ public class LoginFragment extends Fragment {
     private ProgressDialog pg;
 
     private OnLoginInteractionListener mListener;
+
+    final private OnLoginInteractionListener getListener() {
+        return mListener;
+    }
 
     public LoginFragment() {
         // Required empty public constructor
@@ -102,6 +114,10 @@ public class LoginFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        if(savedInstanceState != null) {
+            mTePhoneNumberStr = savedInstanceState.getString("mTePhoneNumber");
+        }
+
     }
 
     @Override
@@ -112,21 +128,33 @@ public class LoginFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_login, container, false);
 
         // Find all views
-        final EditText tePhoneNumber = (EditText) v.findViewById(R.id.tePhoneNumber);
-        final EditText tePassword = (EditText) v.findViewById(R.id.tePassword);
-        final CheckBox cbShowPassword = (CheckBox) v.findViewById(R.id.cbShowPassword);
-        final Button btLogin = (Button) v.findViewById(R.id.btLogin);
-        final Button btRegistration = (Button) v.findViewById(R.id.btRegistration);
-        final TextView tvFogotPassword = (TextView) v.findViewById(R.id.tvFogotPassword);
+        mTePhoneNumber = (EditText) v.findViewById(R.id.tePhoneNumber);
+        mTePassword = (EditText) v.findViewById(R.id.tePassword);
+        mCbShowPassword = (CheckBox) v.findViewById(R.id.cbShowPassword);
+        Button btLogin = (Button) v.findViewById(R.id.btLogin);
 
+        if(mTePhoneNumberStr != null) {
+            mTePhoneNumber.setText(mTePhoneNumberStr);
+        }
 
-        cbShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mTePassword.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d("MyApp", "mTePassword.setOnKeyListener " + keyCode);
+                if (keyCode == 66) {
+                    hideKeyboard(v);
+                    //onLoginClick(mTePhoneNumber, mTePassword);
+                    return true; //this is required to stop sending key event to parent
+                }
+                return false;
+            }
+        });
+        mCbShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(!isChecked) {
-                    tePassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                if (!isChecked) {
+                    mTePassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 } else {
-                    tePassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    mTePassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             }
         });
@@ -134,11 +162,26 @@ public class LoginFragment extends Fragment {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLoginClick(tePhoneNumber, tePassword);
+                onLoginClick(mTePhoneNumber, mTePassword);
             }
         });
 
         return v;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("mTePhoneNumber", mTePhoneNumber.getText().toString());
+        savedInstanceState.putString("mTePassword", mTePassword.getText().toString());
+        savedInstanceState.putBoolean("mCbShowPassword", mCbShowPassword.isChecked());
+    }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager manager = (InputMethodManager) view.getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (manager != null)
+            manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void onLoginClick(EditText tePhoneNumber, EditText tePassword) {
@@ -204,26 +247,29 @@ public class LoginFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "getHashString:" + s);
-
-            try {
-                JSONObject obj = new JSONObject(s);
-                if(obj.has("result")) {
-                    boolean result = obj.getBoolean("result");
-                    if (result) {
-                        FragmentManager fm = mFragmentActivity.getSupportFragmentManager();
-                        Fragment messagesFragment = MessagesFragment.newInstance(1);
-                        fm.beginTransaction().replace(R.id.container, messagesFragment).commit();
-                    } else {
-                        Toast.makeText(mContext, "Wrong number or password!!!", Toast.LENGTH_LONG).show();
-                        mNumber = null;
+            if( s != null ) {
+                try {
+                    JSONObject obj = new JSONObject(s);
+                    if (obj.has("result")) {
+                        boolean result = obj.getBoolean("result");
+                        if (result) {
+                            FragmentManager fm = mFragmentActivity.getSupportFragmentManager();
+                            Fragment messagesFragment = MessagesFragment.newInstance(1);
+                            fm.beginTransaction().replace(R.id.container, messagesFragment).commit();
+                        } else {
+                            Toast.makeText(mContext, "Wrong number or password!!!", Toast.LENGTH_LONG).show();
+                            mNumber = null;
+                        }
+                        if(mListener != null)
+                            mListener.startGCMRegistration(mNumber);
+                        else
+                            Log.d("MyApp", "mListener is null");
                     }
-                    mListener.startGCMRegistration(mNumber);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally {
-                pg.hide();
             }
+            pg.hide();
         }
     }
 }

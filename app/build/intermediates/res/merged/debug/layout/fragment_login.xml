@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="biz.atelecom.communicator.LoginFragment">
 
-     <LinearLayout
+     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,48 +16,48 @@
             android:layout_height="wrap_content"
             android:id="@+id/ivLogo"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:src="@drawable/sym_def_app_icon" />
+            android:src="@drawable/sym_def_app_icon"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="20dp" />
 
         <LinearLayout
-         android:orientation="horizontal"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content">
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:id="@+id/linearLayout"
+            android:layout_below="@+id/ivLogo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="0dp">
 
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textAppearance="?android:attr/textAppearanceMedium"
-             android:text="@string/phone_number"
-             android:id="@+id/tvPhoneNumber" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="+380894"
+                android:ems="4"
+                android:id="@+id/tvPhoneNumber"
+                android:layout_above="@+id/btLogin"
+                android:layout_toLeftOf="@+id/tePhoneNumber"
+                android:layout_toStartOf="@+id/tePhoneNumber"
+                android:layout_marginBottom="45dp" />
 
-         <EditText
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:id="@+id/tePhoneNumber"
-             android:hint="number"
-             android:inputType="numberDecimal" />
-        </LinearLayout>
 
-        <LinearLayout
-         android:orientation="horizontal"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content">
-
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textAppearance="?android:attr/textAppearanceMedium"
-             android:text="@string/password"
-             android:id="@+id/tvPassword" />
-
-         <EditText
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:inputType="textPassword"
-             android:digits="0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM"
-             android:hint="passsword"
-             android:ems="10"
-             android:id="@+id/tePassword" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tePhoneNumber"
+                android:hint="@string/number_hint"
+                android:inputType="numberDecimal"
+                android:lines="1"
+                android:ems="6"
+                android:digits="0123456789"
+                android:text=""
+                android:layout_alignTop="@+id/tvPhoneNumber"
+                android:layout_toRightOf="@+id/btRegistration"
+                android:layout_toEndOf="@+id/btRegistration"
+                android:singleLine="true" />
 
         </LinearLayout>
 
@@ -65,38 +65,62 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="Show password"
-             android:id="@+id/cbShowPassword" />
+             android:id="@+id/cbShowPassword"
+             android:layout_below="@+id/tePassword"
+             android:layout_alignLeft="@+id/tePassword"
+             android:layout_alignStart="@+id/tePassword" />
 
-         <LinearLayout
-             android:orientation="horizontal"
+
+
+         <TextView
              android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+             android:layout_height="wrap_content"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:text="Fogot password"
+             android:id="@+id/tvFogotPassword"
+             android:autoText="false"
+             android:clickable="true"
+             android:gravity="center_horizontal"
+             android:layout_marginTop="33dp"
+             android:layout_below="@+id/btRegistration"
+             android:layout_centerHorizontal="true"
+             android:visibility="gone"/>
 
-             <Button
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Login"
-                 android:id="@+id/btLogin" />
-
-             <TextView
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:textAppearance="?android:attr/textAppearanceMedium"
-                 android:text="Fogot password"
-                 android:id="@+id/tvFogotPassword"
-                 android:autoText="false"
-                 android:clickable="true"
-                 android:gravity="center_horizontal" />
-
-         </LinearLayout>
-
+         <EditText
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:inputType="textPassword"
+          android:digits="0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM"
+          android:hint="@string/password_hint"
+          android:ems="10"
+          android:id="@+id/tePassword"
+             android:layout_below="@+id/linearLayout"
+             android:layout_centerHorizontal="true"
+             android:singleLine="true" />
 
          <Button
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="Registration"
-             android:id="@+id/btRegistration" />
+             android:id="@+id/btRegistration"
+             android:layout_below="@+id/btLogin"
+             android:layout_toLeftOf="@+id/btLogin"
+             android:layout_toStartOf="@+id/btLogin"
+             android:layout_marginTop="29dp"
+             android:visibility="gone" />
 
-     </LinearLayout>
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text=" > NEXT"
+             android:id="@+id/btLogin"
+             android:layout_marginTop="28dp"
+             android:background="#00000000"
+             android:layout_below="@+id/cbShowPassword"
+             android:layout_toRightOf="@+id/cbShowPassword"
+             android:layout_toEndOf="@+id/cbShowPassword"
+             android:textSize="24dp"
+             android:textColor="#26BAF2" />
+     </RelativeLayout>
 
 </FrameLayout>

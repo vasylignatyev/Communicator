@@ -1,18 +1,6 @@
 [
     {
-        "merged": "C:\\android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
-        "source": "C:\\android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.1\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
-    },
-    {
-        "merged": "E:\\Android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
-        "source": "E:\\Android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
-    },
-    {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
-        "source": "C:\\android\\Communicator\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.1\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
-    },
-    {
-        "merged": "C:\\android\\Atlantis\\app\\build\\intermediates\\res\\merged\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
-        "source": "C:\\android\\Atlantis\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.1\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
+        "merged": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
+        "source": "E:\\Android\\Communicator\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.1\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
     }
 ]

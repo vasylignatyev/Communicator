@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "E:\\Android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\values-w720dp-v13\\values-w720dp-v13.xml",
+        "outputFile": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\values-w720dp-v13\\values-w720dp-v13.xml",
         "map": [
             {
                 "to": {
@@ -11,79 +11,7 @@
                     "endOffset": 127
                 },
                 "from": {
-                    "file": "E:\\Android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\values-w720dp-v13\\values-w720dp-v13.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 76,
-                        "endOffset": 127
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\values-w720dp-v13\\values-w720dp-v13.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 76,
-                    "endOffset": 127
-                },
-                "from": {
-                    "file": "C:\\android\\Communicator\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\values-w720dp-v13\\values-w720dp-v13.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 76,
-                        "endOffset": 127
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "C:\\android\\Atlantis\\app\\build\\intermediates\\res\\merged\\debug\\values-w720dp-v13\\values-w720dp-v13.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 76,
-                    "endOffset": 127
-                },
-                "from": {
-                    "file": "C:\\android\\Atlantis\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\values-w720dp-v13\\values-w720dp-v13.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 76,
-                        "endOffset": 127
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "C:\\android\\Atelecom\\app\\build\\intermediates\\res\\merged\\debug\\values-w720dp-v13\\values-w720dp-v13.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 76,
-                    "endOffset": 127
-                },
-                "from": {
-                    "file": "C:\\android\\Atelecom\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\values-w720dp-v13\\values-w720dp-v13.xml",
+                    "file": "E:\\Android\\Communicator\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\values-w720dp-v13\\values-w720dp-v13.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

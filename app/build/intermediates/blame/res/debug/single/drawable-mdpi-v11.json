@@ -1,14 +1,14 @@
 [
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v11\\ic_stat_ic_notification.png",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-mdpi-v11\\ic_stat_ic_notification.png"
+        "merged": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v11\\atelecom_ic_notification.png",
+        "source": "E:\\Android\\Communicator\\app\\src\\main\\res\\drawable-mdpi-v11\\atelecom_ic_notification.png"
     },
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v11\\atelecom_ic_notification.png",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-mdpi-v11\\atelecom_ic_notification.png"
+        "merged": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v11\\ic_stat_lanch.png",
+        "source": "E:\\Android\\Communicator\\app\\src\\main\\res\\drawable-mdpi-v11\\ic_stat_lanch.png"
     },
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v11\\ic_stat_lanch.png",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\drawable-mdpi-v11\\ic_stat_lanch.png"
+        "merged": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v11\\ic_stat_ic_notification.png",
+        "source": "E:\\Android\\Communicator\\app\\src\\main\\res\\drawable-mdpi-v11\\ic_stat_ic_notification.png"
     }
 ]

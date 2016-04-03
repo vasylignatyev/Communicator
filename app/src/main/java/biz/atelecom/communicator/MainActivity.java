@@ -197,8 +197,8 @@ public class MainActivity extends AppCompatActivity
         Log.d("MyApp", "Click1 on: " + item.id);
 
         Intent intent = new Intent(this, ChatActivity.class);
-        intent.putExtra(ChatFragment.ARG_PHONE_FROM, getNumber());
-        intent.putExtra(ChatFragment.ARG_PHONE_TO, item.id);
+        intent.putExtra(ChatFragment.ARG_NUMBER_A, getNumber());
+        intent.putExtra(ChatFragment.ARG_NUMBER_B, item.id);
         startActivity(intent);
     }
 }

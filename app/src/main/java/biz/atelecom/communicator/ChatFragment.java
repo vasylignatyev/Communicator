@@ -39,13 +39,13 @@ import biz.atelecom.communicator.models.Message;
 public class ChatFragment extends Fragment {
 
     public static final String ARG_COLUMN_COUNT = "column-count";
-    public static final String ARG_PHONE_TO = "numberB";
-    public static final String ARG_PHONE_FROM = "numberA";
+    public static final String ARG_NUMBER_B = "numberB";
+    public static final String ARG_NUMBER_A = "numberA";
 
     private int mColumnCount = 1;
 
-    private String mPhoneFrom;
-    private String mPhoneTo;
+    private String mNumberA;
+    private String mNumberB;
 
     private EditText etMessage;
 
@@ -68,15 +68,15 @@ public class ChatFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ChatFragment newInstance(String phoneFrom , String phoneTo) {
+    public static ChatFragment newInstance(String numberA , String numberB) {
         Log.d("MyApp", "ChatFragment.newInstance");
-        Log.d("MyApp", "ChatActivity PHONE_FROM: " + phoneFrom);
-        Log.d("MyApp", "ChatActivity PHONE_TO: " + phoneTo);
+        Log.d("MyApp", "ChatActivity PHONE_A: " + numberA);
+        Log.d("MyApp", "ChatActivity PHONE_B: " + numberB);
 
         ChatFragment fragment = new ChatFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PHONE_FROM, phoneFrom);
-        args.putString(ARG_PHONE_TO, phoneTo);
+        args.putString(ARG_NUMBER_A, numberA);
+        args.putString(ARG_NUMBER_B, numberB);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,8 +87,8 @@ public class ChatFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT, 1);
-            mPhoneFrom = getArguments().getString(ARG_PHONE_FROM, null);
-            mPhoneTo = getArguments().getString(ARG_PHONE_TO, null);
+            mNumberA = getArguments().getString(ARG_NUMBER_A, null);
+            mNumberB = getArguments().getString(ARG_NUMBER_B, null);
         }
     }
 
@@ -132,9 +132,9 @@ public class ChatFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         if(toolbar != null) {
-            toolbar.setTitle((mPhoneTo == null) ? "(Empty)" : mPhoneTo);
+            toolbar.setTitle((mNumberB == null) ? "(Empty)" : mNumberB);
         }
-        if(mPhoneTo != null) {
+        if(mNumberB != null) {
             getMessageList();
         }
 
@@ -187,8 +187,8 @@ public class ChatFragment extends Fragment {
         RequestPackage rp = new RequestPackage( MainActivity.AJAX );
         rp.setMethod("GET");
         rp.setParam("functionName", "get_message_list");
-        rp.setParam("numberA", mPhoneFrom);
-        rp.setParam("numberB", mPhoneTo);
+        rp.setParam("numberA", mNumberA);
+        rp.setParam("numberB", mNumberB);
         pg.show();
 
         GetMessageListAsyncTask task = new GetMessageListAsyncTask();
@@ -210,6 +210,7 @@ public class ChatFragment extends Fragment {
             JSONObject jObj;
             try {
                 JSONArray jArray = new JSONArray(s);
+                mMessageList.clear();
                 for (int i = 0; i < jArray.length(); i++) {
                     jObj = jArray.getJSONObject(i);
                     message = new Message();
@@ -233,7 +234,7 @@ public class ChatFragment extends Fragment {
                     }
                     mMessageList.add(message);
                 }
-                mRecyclerView.setAdapter(new ChatRecyclerViewAdapter(mMessageList));
+                mRecyclerView.setAdapter(new ChatRecyclerViewAdapter(getResources(), mNumberB, mMessageList));
                 mRecyclerView.scrollToPosition(mMessageList.size() - 1);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -247,13 +248,13 @@ public class ChatFragment extends Fragment {
     }
     private void sendMessage(String body) {
         RequestPackage rp = new RequestPackage( MainActivity.AJAX );
-        if(mPhoneTo == null ) {
+        if(mNumberB == null ) {
             return;
         }
         rp.setMethod("GET");
         rp.setParam("functionName", "send_message");
-        rp.setParam("numberA", mPhoneFrom  );
-        rp.setParam("numberB", mPhoneTo);
+        rp.setParam("numberA", mNumberA);
+        rp.setParam("numberB", mNumberB);
         rp.setParam("body", body);
         pg.show();
 

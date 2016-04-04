@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -43,6 +42,8 @@ public class LoginFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final String TMP_PHONE_NUMBER = "tmpPhoneNumber";
+
     private String mParam1;
     private String mParam2;
 
@@ -50,9 +51,12 @@ public class LoginFragment extends Fragment {
     EditText mTePassword;
     CheckBox mCbShowPassword;
 
-    String mTePhoneNumberStr;
+    String mTmpPhoneNumber = null;
 
     private String mNumber;
+    private String mPassword;
+    private String mToken;
+
 
 
     private Context mContext;
@@ -98,7 +102,6 @@ public class LoginFragment extends Fragment {
         pg.setMessage("Wait please ...");
         pg.setTitle("Connecting to server");
 
-
         if (context instanceof OnLoginInteractionListener) {
             mListener = (OnLoginInteractionListener) context;
         } else {
@@ -109,21 +112,26 @@ public class LoginFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        Log.d("MyApp", "onCreate");
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         if(savedInstanceState != null) {
-            mTePhoneNumberStr = savedInstanceState.getString("mTePhoneNumber");
+            mTmpPhoneNumber = savedInstanceState.getString(TMP_PHONE_NUMBER);
+            Log.d("MyApp", "mTmpPhoneNumber: " + mTmpPhoneNumber);
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v;
+
+        Log.d("MyApp", "onCreateView");
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_login, container, false);
 
@@ -133,8 +141,9 @@ public class LoginFragment extends Fragment {
         mCbShowPassword = (CheckBox) v.findViewById(R.id.cbShowPassword);
         Button btLogin = (Button) v.findViewById(R.id.btLogin);
 
-        if(mTePhoneNumberStr != null) {
-            mTePhoneNumber.setText(mTePhoneNumberStr);
+        if(mTmpPhoneNumber != null) {
+            Log.d("MyApp", "mTmpPhoneNumber: " + mTmpPhoneNumber);
+            mTePhoneNumber.setText(mTmpPhoneNumber);
         }
 
         mTePassword.setOnKeyListener(new View.OnKeyListener() {
@@ -172,7 +181,12 @@ public class LoginFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString("mTePhoneNumber", mTePhoneNumber.getText().toString());
+
+        Log.d("MyApp", "onSaveInstanceState");
+
+        mTmpPhoneNumber = mTePhoneNumber.getText().toString();
+        Log.d("MyApp", "mTmpPhoneNumber: " + mTmpPhoneNumber);
+        savedInstanceState.putString(TMP_PHONE_NUMBER, mTmpPhoneNumber);
         savedInstanceState.putString("mTePassword", mTePassword.getText().toString());
         savedInstanceState.putBoolean("mCbShowPassword", mCbShowPassword.isChecked());
     }
@@ -224,7 +238,7 @@ public class LoginFragment extends Fragment {
      */
     public interface OnLoginInteractionListener {
         // TODO: Update argument type and name
-        void startGCMRegistration(String number);
+        void loginSuccess(String number);
     }
     private void login(String phoneNumber, String password) {
         RequestPackage rp = new RequestPackage( MainActivity.AJAX );
@@ -238,7 +252,6 @@ public class LoginFragment extends Fragment {
         LoginAsyncTask task = new LoginAsyncTask();
         task.execute(rp);
     }
-
     private class LoginAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         @Override
         protected String doInBackground(RequestPackage... params) {
@@ -253,17 +266,12 @@ public class LoginFragment extends Fragment {
                     if (obj.has("result")) {
                         boolean result = obj.getBoolean("result");
                         if (result) {
-                            FragmentManager fm = mFragmentActivity.getSupportFragmentManager();
-                            Fragment messagesFragment = MessagesFragment.newInstance(1);
-                            fm.beginTransaction().replace(R.id.container, messagesFragment).commit();
+                            mListener.loginSuccess(mNumber);
                         } else {
                             Toast.makeText(mContext, "Wrong number or password!!!", Toast.LENGTH_LONG).show();
                             mNumber = null;
                         }
-                        if(mListener != null)
-                            mListener.startGCMRegistration(mNumber);
-                        else
-                            Log.d("MyApp", "mListener is null");
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

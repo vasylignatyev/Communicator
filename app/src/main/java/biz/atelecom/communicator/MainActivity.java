@@ -28,12 +28,13 @@ import biz.atelecom.communicator.models.MessageStat;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        LoginFragment.OnLoginInteractionListener, MessagesFragment.OnMessageListFragmentListener {
+        MessagesFragment.OnMessageListFragmentListener {
 
     public static final String AJAX = "http://psoap.atlantistelecom.net/android/ajax.php";
 
     public static final String GCM_TOKEN = "gcmToken";
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static final String ARG_NUMBER = "gcmToken";
+
 
     private String mGcmToken = null;
 
@@ -73,10 +74,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //FrameLayout container = (FrameLayout) findViewById(R.id.container);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        //FragmentManager fragmentManager = getSupportFragmentManager();
 
-        Fragment fragment = LoginFragment.newInstance("1", "2");
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        //Fragment fragment = LoginFragment.newInstance("1", "2");
+        //fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
 
     }
 
@@ -162,35 +163,11 @@ public class MainActivity extends AppCompatActivity
             Log.d("MyApp", "MainActivity::mMessageReceiver action =" + action + ", mGcmToken =" + mGcmToken);
         }
     };
+
     public void unsetGcmRegistrationToken() {
     }
 
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                Log.d("MyApp", "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
 
-    public void startGCMRegistration(String number) {
-        mNumber = number;
-
-        if ((mNumber != null) && checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
-
-    }
 
     @Override
     public void onMessageStatClick(MessageStat item) {

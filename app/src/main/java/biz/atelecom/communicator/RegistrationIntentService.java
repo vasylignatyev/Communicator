@@ -126,8 +126,10 @@ public class RegistrationIntentService extends IntentService {
                     // You should store a boolean that indicates whether the generated token has been
                     // sent to your server. If the boolean is false, send the token to your server,
                     // otherwise your server should have already received the token.
-                    mSharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
-
+                    SharedPreferences.Editor ed = mSharedPreferences.edit();
+                    ed.putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true);
+                    ed.putString(QuickstartPreferences.GCM_SHORT_TOKEN, gcm_short_token);
+                    ed.apply();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

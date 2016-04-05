@@ -2,9 +2,11 @@ package biz.atelecom.communicator;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -165,6 +168,7 @@ public class LoginFragment extends Fragment {
                 } else {
                     mTePassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
+                mTePassword.setSelection(mTePassword.getText().length());
             }
         });
 
@@ -174,6 +178,17 @@ public class LoginFragment extends Fragment {
                 onLoginClick(mTePhoneNumber, mTePassword);
             }
         });
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mNumber = sp.getString(QuickstartPreferences.REGISTERED_NUMBER, null);
+
+        if(mNumber != null) {
+            int len = mNumber.length();
+            mTePhoneNumber.setText( mNumber.substring( len - 6, len));
+            if(mTePassword.requestFocus()){
+                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            }
+        }
 
         return v;
     }

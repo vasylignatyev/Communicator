@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -73,11 +77,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //FrameLayout container = (FrameLayout) findViewById(R.id.container);
-        //FragmentManager fragmentManager = getSupportFragmentManager();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        mNumber = sp.getString(QuickstartPreferences.REGISTERED_NUMBER, null);
 
-        //Fragment fragment = LoginFragment.newInstance("1", "2");
-        //fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        //FrameLayout container = (FrameLayout) findViewById(R.id.container);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Fragment fragment = MessagesFragment.newInstance(1);
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+
 
     }
 
@@ -129,6 +137,12 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_messages:
                 newFragment = MessagesFragment.newInstance(1);
                 break;
+            case R.id.nav_quit:
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+                sp.edit().remove(QuickstartPreferences.GCM_SHORT_TOKEN).apply();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+
             default:
                 newFragment = ContactItemFragment.newInstance(1);
                 break;

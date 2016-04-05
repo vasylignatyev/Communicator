@@ -1,8 +1,10 @@
 package biz.atelecom.communicator;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,12 +38,29 @@ public class LoginActivity extends AppCompatActivity implements
                         .setAction("Action", null).show();
             }
         });
+        */
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String gcmShortToken = sp.getString(QuickstartPreferences.GCM_SHORT_TOKEN, null);
+        if(gcmShortToken != null ) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
     public void loginSuccess(String number) {
         mNumber = number;
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sp.edit().putString(QuickstartPreferences.REGISTERED_NUMBER, number).apply();
 
         //start GCM registration
         if ((mNumber != null) && checkPlayServices()) {

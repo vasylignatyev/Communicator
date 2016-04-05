@@ -2454,7 +2454,7 @@ containing a value of this type.
         public static final int clip_horizontal=0x7f0c002c;
         public static final int clip_vertical=0x7f0c002d;
         public static final int collapseActionView=0x7f0c0036;
-        public static final int container=0x7f0c0075;
+        public static final int container=0x7f0c0074;
         public static final int content=0x7f0c0088;
         public static final int contentPanel=0x7f0c0052;
         public static final int custom=0x7f0c0058;
@@ -2468,7 +2468,7 @@ containing a value of this type.
         public static final int design_menu_item_text=0x7f0c0080;
         public static final int design_navigation_view=0x7f0c007f;
         public static final int disableHome=0x7f0c000e;
-        public static final int drawer_layout=0x7f0c0074;
+        public static final int drawer_layout=0x7f0c0073;
         public static final int edit_query=0x7f0c0064;
         public static final int end=0x7f0c0021;
         public static final int end_padder=0x7f0c00a6;
@@ -2479,7 +2479,7 @@ containing a value of this type.
         public static final int exitUntilCollapsed=0x7f0c0017;
         public static final int expand_activities_button=0x7f0c0046;
         public static final int expanded_menu=0x7f0c0059;
-        public static final int fab=0x7f0c0073;
+        public static final int fab=0x7f0c0076;
         public static final int fill=0x7f0c002e;
         public static final int fill_horizontal=0x7f0c002f;
         public static final int fill_vertical=0x7f0c0022;
@@ -2512,7 +2512,7 @@ containing a value of this type.
         public static final int nav_contacts=0x7f0c00a7;
         public static final int nav_messages=0x7f0c00a8;
         public static final int nav_quit=0x7f0c00a9;
-        public static final int nav_view=0x7f0c0076;
+        public static final int nav_view=0x7f0c0075;
         public static final int navigation_header_container=0x7f0c007e;
         public static final int never=0x7f0c0038;
         public static final int none=0x7f0c0010;

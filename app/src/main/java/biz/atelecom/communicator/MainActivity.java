@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -23,10 +24,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import biz.atelecom.communicator.ajax.HTTPManager;
+import biz.atelecom.communicator.ajax.RequestPackage;
 import biz.atelecom.communicator.models.MessageStat;
 
 public class MainActivity extends AppCompatActivity
@@ -36,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     public static final String AJAX = "http://psoap.atlantistelecom.net/android/ajax.php";
 
     public static final String GCM_TOKEN = "gcmToken";
-    public static final String ARG_NUMBER = "gcmToken";
+    public static final String ARG_NUMBER = "arg_number";
 
 
     private String mGcmToken = null;
@@ -77,8 +84,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            mNumber = extras.getString(ARG_NUMBER, null);
+        }
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        mNumber = sp.getString(QuickstartPreferences.REGISTERED_NUMBER, null);
+        if(mNumber == null) {
+            mNumber = sp.getString(QuickstartPreferences.REGISTERED_NUMBER, null);
+        } else {
+            sp.edit().putString(QuickstartPreferences.REGISTERED_NUMBER, mNumber).apply();
+        }
+
+
 
         //FrameLayout container = (FrameLayout) findViewById(R.id.container);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -139,9 +156,15 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_quit:
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+                String gsmShortToken = sp.getString(QuickstartPreferences.GCM_SHORT_TOKEN, null);
+                String number = sp.getString(QuickstartPreferences.REGISTERED_NUMBER, null);
+                if((gsmShortToken != null) && (number != null)) {
+                    unsetGcmToken(number, gsmShortToken);
+                }
                 sp.edit().remove(QuickstartPreferences.GCM_SHORT_TOKEN).apply();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
+                finish();
 
             default:
                 newFragment = ContactItemFragment.newInstance(1);
@@ -178,10 +201,6 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-    public void unsetGcmRegistrationToken() {
-    }
-
-
 
     @Override
     public void onMessageStatClick(MessageStat item) {
@@ -192,4 +211,27 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(ChatFragment.ARG_NUMBER_B, item.id);
         startActivity(intent);
     }
+
+
+    private void unsetGcmToken(String number, String gsmShortToken) {
+        RequestPackage rp = new RequestPackage( MainActivity.AJAX );
+        rp.setMethod("GET");
+        rp.setParam("functionName", "unsetGcmToken");
+        rp.setParam("gcm_short_token", gsmShortToken);
+        rp.setParam("number", number);
+
+        UnsetGcmTokenAsyncTask task = new UnsetGcmTokenAsyncTask();
+        task.execute(rp);
+    }
+    private class UnsetGcmTokenAsyncTask extends AsyncTask<RequestPackage, Void, String> {
+        @Override
+        protected String doInBackground(RequestPackage... params) {
+            return HTTPManager.getData(params[0]);
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d("MyApp", "getHashString:" + s);
+        }
+    }
+
 }

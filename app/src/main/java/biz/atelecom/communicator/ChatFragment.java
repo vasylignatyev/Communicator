@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +25,9 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
+import biz.atelecom.communicator.adapters.ChatListViewAdapter;
 import biz.atelecom.communicator.adapters.ChatRecyclerViewAdapter;
 import biz.atelecom.communicator.ajax.HTTPManager;
 import biz.atelecom.communicator.ajax.RequestPackage;
@@ -51,9 +55,12 @@ public class ChatFragment extends Fragment {
 
     private ProgressDialog pg;
 
+    ListView mList;
+
     private final ArrayList<Message> mMessageList = new ArrayList<>();
 
-    private RecyclerView mRecyclerView;
+    //private RecyclerView mRecyclerView;
+    //private ChatListViewAdapter mChatListViewAdapter;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -108,7 +115,9 @@ public class ChatFragment extends Fragment {
             }
             //recyclerView.setAdapter(new ChatRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        //mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        mList = (ListView) view.findViewById(R.id.list);
+
         etMessage = (EditText) view.findViewById(R.id.etMessage);
         final Button btSend = (Button) view.findViewById(R.id.btSend);
         final Button btRefresh = (Button) view.findViewById(R.id.btRefresh);
@@ -204,8 +213,6 @@ public class ChatFragment extends Fragment {
         protected void onPostExecute(String s) {
             Log.d("MyApp", "GetMessageListAsyncTask:" + s);
 
-
-
             Message message;
             JSONObject jObj;
             try {
@@ -234,8 +241,10 @@ public class ChatFragment extends Fragment {
                     }
                     mMessageList.add(message);
                 }
-                mRecyclerView.setAdapter(new ChatRecyclerViewAdapter(getResources(), mNumberB, mMessageList));
-                mRecyclerView.scrollToPosition(mMessageList.size() - 1);
+                //mRecyclerView.setAdapter(new ChatRecyclerViewAdapter( mNumberB, mMessageList));
+                //mRecyclerView.scrollToPosition(mMessageList.size() - 1);
+                mList.setAdapter(new ChatListViewAdapter(getActivity(), R.layout.chat_item, mMessageList, mNumberB));
+                mList.smoothScrollToPosition(mMessageList.size() - 1);
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (ParseException e) {

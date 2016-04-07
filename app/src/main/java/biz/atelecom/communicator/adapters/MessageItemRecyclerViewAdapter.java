@@ -43,10 +43,6 @@ public class MessageItemRecyclerViewAdapter extends RecyclerView.Adapter<Message
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                TextView tvContactId = (TextView) v.findViewById(R.id.tvContactId);
-
-
                 if (null != mListener) {
                     mListener.onMessageStatClick(holder.mItem);
                 }

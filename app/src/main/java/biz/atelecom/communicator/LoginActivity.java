@@ -59,8 +59,6 @@ public class LoginActivity extends AppCompatActivity implements
     public void loginSuccess(String number) {
         mNumber = number;
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        sp.edit().putString(QuickstartPreferences.REGISTERED_NUMBER, number).apply();
 
         //start GCM registration
         if ((mNumber != null) && checkPlayServices()) {
@@ -70,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements
         }
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.ARG_NUMBER, number);
         startActivity(intent);
     }
     private boolean checkPlayServices() {

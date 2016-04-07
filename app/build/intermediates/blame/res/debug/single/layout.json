@@ -12,12 +12,12 @@
         "source": "C:\\android\\Communicator\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\layout\\abc_dialog_title_material.xml"
     },
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\messages_item.xml",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\layout\\messages_item.xml"
-    },
-    {
         "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_contactitem_list.xml",
         "source": "C:\\android\\Communicator\\app\\src\\main\\res\\layout\\fragment_contactitem_list.xml"
+    },
+    {
+        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\messages_item.xml",
+        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\layout\\messages_item.xml"
     },
     {
         "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",

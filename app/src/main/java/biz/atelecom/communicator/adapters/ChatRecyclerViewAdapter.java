@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -17,20 +18,19 @@ import biz.atelecom.communicator.R;
 import biz.atelecom.communicator.models.Message;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ViewHolder> {
 
-    private List<Message> mValues = null;
+    private final List<Message> mValues;
     private final String mNumber;
-    private Resources mResources;
 
-    public ChatRecyclerViewAdapter(Resources resources, String number, List<Message> items) {
+    public ChatRecyclerViewAdapter( String number, List<Message> items) {
         mValues = items;
         mNumber = number;
-        mResources = resources;
     }
 
     @Override
@@ -56,26 +56,46 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
         Message msg = mValues.get(position);
         holder.mItem = msg;
 
-        TextView tv  = (msg.to.equals(mNumber)) ? holder.tvMessageIn : holder.tvMessageOut;
+        TextView tv;
+        LinearLayout ll;
+        TextView tvMessageDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy E");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(msg.issueDate);
+
+        Calendar prevDate = Calendar.getInstance();
+        if(position != 0 ) {
+            prevDate.setTime(mValues.get(position-1).issueDate);
+            prevDate.set(Calendar.SECOND, 0);
+            prevDate.set(Calendar.MINUTE, 0);
+            prevDate.set(Calendar.HOUR_OF_DAY, 0);
+            prevDate.add(Calendar.DATE, 1);
+        }
+
+        if(position == 0 || calendar.after(prevDate)){
+            holder.ll_separator.setVisibility(View.VISIBLE);
+            holder.tvDate.setText(sdf.format(msg.issueDate));
+         }
+
+       if(msg.to.equals(mNumber)) {
+            tv= holder.tvMessageIn;
+            ll = holder.ll_incoming;
+            tvMessageDate = holder.tv_dateIn;
+
+        } else {
+            tv= holder.tvMessageOut;
+            ll = holder.ll_outgoing;
+            tvMessageDate = holder.tv_dateOut;
+        }
+
         tv.setText(msg.body);
         tv.setTypeface(null, Typeface.BOLD);
-        tv.setVisibility(View.VISIBLE);
 
-        holder.tvDate.setText(getDateStr(msg.issueDate));
-        /*
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onMessageStatClick(holder.mItem);
-                }
-            }
-
-        });
-        */
-    }
+        ll.setVisibility(View.VISIBLE);
+        sdf = new SimpleDateFormat("HH:mm");
+        tvMessageDate.setText(sdf.format(msg.issueDate));
+     }
 
     @Override
     public int getItemCount() {
@@ -86,16 +106,26 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
 
         public final View mView;
         public Message mItem;
+        public LinearLayout ll_separator;
         public final TextView tvMessageIn;
         public final TextView tvMessageOut;
         public final TextView tvDate;
+        public final TextView tv_dateIn;
+        public final TextView tv_dateOut;
+        public final LinearLayout ll_incoming;
+        public final LinearLayout ll_outgoing;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            ll_separator = (LinearLayout)view.findViewById(R.id.ll_separator);
             tvMessageIn = (TextView) view.findViewById(R.id.tvMessageIn);
             tvMessageOut = (TextView) view.findViewById(R.id.tvMessageOut);
             tvDate = (TextView) view.findViewById(R.id.tvDate);
+            tv_dateIn = (TextView) view.findViewById(R.id.tv_dateIn);
+            tv_dateOut = (TextView) view.findViewById(R.id.tv_dateOut);
+            ll_incoming = (LinearLayout) view.findViewById(R.id.ll_incoming);
+            ll_outgoing = (LinearLayout) view.findViewById(R.id.ll_outgoing);
          }
 
         @Override

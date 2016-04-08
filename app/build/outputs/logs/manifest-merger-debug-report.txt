@@ -84,18 +84,18 @@ ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:15:5-17:47
 		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:17:9-44
 	android:name
 		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:16:9-72
-android:uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:19:5-89
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:19:5-81
 	android:name
-		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:19:30-86
-android:uses-permission#android.permission.READ_PHONE_STATE
-ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:20:5-83
+		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:19:22-78
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:20:5-75
 	android:name
-		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:20:30-80
-android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:21:5-88
+		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:20:22-72
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:21:5-80
 	android:name
-		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:21:30-85
+		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:21:22-77
 application
 ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:24:5-106:19
 MERGED from [com.android.support:appcompat-v7:23.2.1] C:\android\Communicator\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\AndroidManifest.xml:25:5-20

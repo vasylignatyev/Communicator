@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:background="#000">
+    android:paddingTop="5dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +16,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
+            android:background="#000000"
             android:layout_weight="1"
             android:layout_gravity="center_vertical" />
         <TextView
@@ -27,11 +26,11 @@
             android:text="22 MAR"
             android:id="@+id/tvDate"
             android:textSize="12dp"
-            android:textColor="#8A8A8A" />
+            android:textColor="#000000" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
+            android:background="#000000"
             android:layout_weight="1"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
@@ -66,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="11:11"
-                android:textColor="#8A8A8A"
+                android:textColor="#000000"
                 android:layout_gravity="left"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
@@ -88,11 +87,10 @@
             android:orientation="vertical"
             android:layout_weight="1">
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvMessageOut"
-                android:background="@drawable/outgoing_message_textview"
-            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMessageOut"
+            android:background="@drawable/outgoing_message_textview"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1" />
@@ -100,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="11:11"
-                android:textColor="#8A8A8A"
+                android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"

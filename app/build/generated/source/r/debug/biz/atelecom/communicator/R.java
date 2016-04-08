@@ -2486,7 +2486,7 @@ containing a value of this type.
         public static final int fill_horizontal=0x7f0c002f;
         public static final int fill_vertical=0x7f0c0022;
         public static final int fixed=0x7f0c0040;
-        public static final int fragment=0x7f0c0072;
+        public static final int fragment=0x7f0c0071;
         public static final int home=0x7f0c0004;
         public static final int homeAsUp=0x7f0c000f;
         public static final int icon=0x7f0c004a;
@@ -2573,7 +2573,7 @@ containing a value of this type.
         public static final int time=0x7f0c00a7;
         public static final int title=0x7f0c004b;
         public static final int title_template=0x7f0c0050;
-        public static final int toolbar=0x7f0c0071;
+        public static final int toolbar=0x7f0c0072;
         public static final int top=0x7f0c0026;
         public static final int topPanel=0x7f0c004f;
         public static final int touch_outside=0x7f0c0081;

@@ -78,23 +78,20 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
             holder.tvDate.setText(sdf.format(msg.issueDate));
          }
 
-       if(msg.to.equals(mNumber)) {
-            tv= holder.tvMessageIn;
-            ll = holder.ll_incoming;
-            tvMessageDate = holder.tv_dateIn;
-
-        } else {
-            tv= holder.tvMessageOut;
-            ll = holder.ll_outgoing;
-            tvMessageDate = holder.tv_dateOut;
-        }
-
-        tv.setText(msg.body);
-        tv.setTypeface(null, Typeface.BOLD);
-
-        ll.setVisibility(View.VISIBLE);
         sdf = new SimpleDateFormat("HH:mm");
-        tvMessageDate.setText(sdf.format(msg.issueDate));
+        if(msg.to.equals(mNumber)) {
+            holder.tvMessageIn.setText(msg.body);
+            holder.tvMessageIn.setTypeface(null, Typeface.BOLD);
+            holder.tv_dateIn.setText(sdf.format(msg.issueDate));
+            holder.ll_incoming.setVisibility(View.VISIBLE);
+            holder.ll_outgoing.setVisibility(View.GONE);
+        } else {
+           holder.tvMessageOut.setText(msg.body);
+           holder.tvMessageOut.setTypeface(null, Typeface.BOLD);
+           holder.tv_dateOut.setText(sdf.format(msg.issueDate));
+           holder.ll_outgoing.setVisibility(View.VISIBLE);
+           holder.ll_incoming.setVisibility(View.GONE);
+        }
      }
 
     @Override

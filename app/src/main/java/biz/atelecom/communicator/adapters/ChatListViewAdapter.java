@@ -3,6 +3,7 @@ package biz.atelecom.communicator.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,9 @@ import biz.atelecom.communicator.models.Message;
 
 public class ChatListViewAdapter extends ArrayAdapter<Message> {
 
-    private List<Message> mMessageList;
-    Context mContext;
-    String mNumber;
+    private final List<Message> mMessageList;
+    private final Context mContext;
+    private final String mNumber;
 
     public ChatListViewAdapter(Context context, int resource, List<Message> objects, String number) {
         super(context, resource, objects);
@@ -34,6 +35,8 @@ public class ChatListViewAdapter extends ArrayAdapter<Message> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         //return super.getView(position, convertView, parent);
+
+        Log.d("MyApp", "Position: " + position);
 
         if(view == null) {
             LayoutInflater inflater =
@@ -68,11 +71,11 @@ public class ChatListViewAdapter extends ArrayAdapter<Message> {
             prevDate.add(Calendar.DATE, 1);
         }
 
-        if(position == 0 || currDate.after(prevDate)){
+        //if(position == 0 || currDate.after(prevDate)){
             ll_separator.setVisibility(View.VISIBLE);
             //tvDate.setText(sdf.format(msg.issueDate));
             tvDate.setText(sdf.format(prevDate.getTime()));
-        }
+        //}
 
         if(msg.to.equals(mNumber)) {
             tv= tvMessageIn;

@@ -59,8 +59,8 @@ public class ChatFragment extends Fragment {
 
     private final ArrayList<Message> mMessageList = new ArrayList<>();
 
-    //private RecyclerView mRecyclerView;
-    //private ChatListViewAdapter mChatListViewAdapter;
+    private RecyclerView mRecyclerView;
+    private ChatListViewAdapter mChatListViewAdapter;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -115,8 +115,8 @@ public class ChatFragment extends Fragment {
             }
             //recyclerView.setAdapter(new ChatRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
-        //mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
-        mList = (ListView) view.findViewById(R.id.list);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        //mList = (ListView) view.findViewById(R.id.list);
 
         etMessage = (EditText) view.findViewById(R.id.etMessage);
         final Button btSend = (Button) view.findViewById(R.id.btSend);
@@ -192,7 +192,7 @@ public class ChatFragment extends Fragment {
     /**
      *  ASYNC TASKS
      */
-    private void getMessageList() {
+    public void getMessageList() {
         RequestPackage rp = new RequestPackage( MainActivity.AJAX );
         rp.setMethod("GET");
         rp.setParam("functionName", "get_message_list");
@@ -241,10 +241,10 @@ public class ChatFragment extends Fragment {
                     }
                     mMessageList.add(message);
                 }
-                //mRecyclerView.setAdapter(new ChatRecyclerViewAdapter( mNumberB, mMessageList));
-                //mRecyclerView.scrollToPosition(mMessageList.size() - 1);
-                mList.setAdapter(new ChatListViewAdapter(getActivity(), R.layout.chat_item, mMessageList, mNumberB));
-                mList.smoothScrollToPosition(mMessageList.size() - 1);
+                mRecyclerView.setAdapter(new ChatRecyclerViewAdapter( mNumberB, mMessageList));
+                mRecyclerView.scrollToPosition(mMessageList.size() - 1);
+                //mList.setAdapter(new ChatListViewAdapter(getActivity(), R.layout.chat_item, mMessageList, mNumberB));
+                //mList.smoothScrollToPosition(mMessageList.size() - 1);
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (ParseException e) {

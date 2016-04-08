@@ -24,12 +24,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 
 public class MyGcmListenerService extends GcmListenerService {
 
-    private static final String TAG = "MyGcmListenerService";
+    private static final String TAG = "MyApp";
 
     /**
      * Called when Message is received.
@@ -44,12 +45,18 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("Message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
-
+/*
         if (from.startsWith("/topics/")) {
             // Message received from some topic.
         } else {
             // normal downstream Message.
         }
+*/
+        //SEND BROARCAST
+        Intent newMessageReceived = new Intent(QuickstartPreferences.NEW_MESSAGE_RECEIVED);
+        newMessageReceived.putExtras(data);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(newMessageReceived);
+
 
         // [START_EXCLUDE]
         /**
@@ -63,16 +70,15 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a Message was received.
          */
+        String numberA = data.getString(ChatFragment.ARG_NUMBER_A);
+        String numberB = data.getString(ChatFragment.ARG_NUMBER_B);
+        data.putString(ChatFragment.ARG_NUMBER_A,numberB);
+        data.putString(ChatFragment.ARG_NUMBER_B,numberA);
         sendNotification(data);
         // [END_EXCLUDE]
     }
     // [END receive_message]
 
-    /**
-     * Create and show a simple notification containing the received GCM Message.
-     *
-     * @param message GCM Message received.
-     */
     private void sendNotification(Bundle data) {
         Intent intent = new Intent(this, ChatActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

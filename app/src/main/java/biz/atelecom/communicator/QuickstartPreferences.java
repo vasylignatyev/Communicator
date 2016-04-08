@@ -22,5 +22,6 @@ public class QuickstartPreferences {
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String GCM_SHORT_TOKEN = "gcmShortToken";
     public static final String REGISTERED_NUMBER = "registeredNumber";
+    public static final String NEW_MESSAGE_RECEIVED = "registeredNumber";
 
 }

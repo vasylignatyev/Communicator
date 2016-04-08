@@ -1,18 +1,34 @@
 package biz.atelecom.communicator;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 public class ChatActivity extends AppCompatActivity {
+
+    String numberA = null;
+    String numberB = null;
+
+    private ChatFragment mChatFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mNewMessageReceiver, new IntentFilter(QuickstartPreferences.NEW_MESSAGE_RECEIVED));
+
 
         //stoolbar.setTitle("TEST");
 /*
@@ -26,16 +42,32 @@ public class ChatActivity extends AppCompatActivity {
         });
 */
         Bundle extras = getIntent().getExtras();
-        String phone_from = null;
-        String phone_to = null;
 
         if (extras != null) {
-            phone_from = extras.getString(ChatFragment.ARG_NUMBER_A, null);
-            phone_to = extras.getString(ChatFragment.ARG_NUMBER_B, null);
+            numberA  = extras.getString(ChatFragment.ARG_NUMBER_A, null);
+            numberB = extras.getString(ChatFragment.ARG_NUMBER_B, null);
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ChatFragment chatFragment = ChatFragment.newInstance( phone_from, phone_to);
-        fragmentManager.beginTransaction().replace(R.id.fragment, chatFragment).commit();
+        mChatFragment = ChatFragment.newInstance( numberA, numberB);
+        fragmentManager.beginTransaction().replace(R.id.fragment, mChatFragment).commit();
     }
+
+    private BroadcastReceiver mNewMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //String action = intent.getAction();
+            //mGcmToken = intent.getStringExtra(GCM_TOKEN);
+
+            //Log.d("MyApp", "MainActivity::mMessageReceiver action =" + action + ", mGcmToken =" + mGcmToken);
+            String senderNumber = intent.getStringExtra(ChatFragment.ARG_NUMBER_A);
+
+            Log.d("MyApp", "New message from: " + senderNumber);
+            //Log.d("MyApp", "New message from: " + numberB);
+
+            if(numberB.equals(senderNumber))
+                mChatFragment.getMessageList();
+        }
+    };
+
 }

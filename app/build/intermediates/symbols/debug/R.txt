@@ -732,7 +732,7 @@ int id fill 0x7f0c002e
 int id fill_horizontal 0x7f0c002f
 int id fill_vertical 0x7f0c0022
 int id fixed 0x7f0c0040
-int id fragment 0x7f0c0072
+int id fragment 0x7f0c0071
 int id home 0x7f0c0004
 int id homeAsUp 0x7f0c000f
 int id icon 0x7f0c004a
@@ -819,7 +819,7 @@ int id textSpacerNoButtons 0x7f0c0055
 int id time 0x7f0c00a7
 int id title 0x7f0c004b
 int id title_template 0x7f0c0050
-int id toolbar 0x7f0c0071
+int id toolbar 0x7f0c0072
 int id top 0x7f0c0026
 int id topPanel 0x7f0c004f
 int id touch_outside 0x7f0c0081

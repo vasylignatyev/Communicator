@@ -53,11 +53,21 @@ public class MyGcmListenerService extends GcmListenerService {
         }
 */
         //SEND BROARCAST
+        /*
         Intent newMessageReceived = new Intent(QuickstartPreferences.NEW_MESSAGE_RECEIVED);
         newMessageReceived.putExtras(data);
         LocalBroadcastManager.getInstance(this).sendBroadcast(newMessageReceived);
-
-
+        */
+        if(MyBus.getInstance().isRegistered()){
+            Log.d("MyApp", "app is alive");
+            // //post data
+        }else{
+            String numberA = data.getString(ChatFragment.ARG_NUMBER_A);
+            String numberB = data.getString(ChatFragment.ARG_NUMBER_B);
+            data.putString(ChatFragment.ARG_NUMBER_A,numberB);
+            data.putString(ChatFragment.ARG_NUMBER_B,numberA);
+            sendNotification(data);
+        }
         // [START_EXCLUDE]
         /**
          * Production applications would usually process the Message here.
@@ -70,11 +80,6 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a Message was received.
          */
-        String numberA = data.getString(ChatFragment.ARG_NUMBER_A);
-        String numberB = data.getString(ChatFragment.ARG_NUMBER_B);
-        data.putString(ChatFragment.ARG_NUMBER_A,numberB);
-        data.putString(ChatFragment.ARG_NUMBER_B,numberA);
-        sendNotification(data);
         // [END_EXCLUDE]
     }
     // [END receive_message]

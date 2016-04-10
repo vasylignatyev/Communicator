@@ -43,8 +43,10 @@ import biz.atelecom.communicator.models.Message;
 public class ChatFragment extends Fragment {
 
     public static final String ARG_COLUMN_COUNT = "column-count";
+    public static final String ARG_I_MESSAGE = "i_message";
     public static final String ARG_NUMBER_B = "numberB";
     public static final String ARG_NUMBER_A = "numberA";
+    public static final String ARG_BODY = "body";
 
     private int mColumnCount = 1;
 
@@ -166,6 +168,18 @@ public class ChatFragment extends Fragment {
                     + " must implement OnMessageListFragmentListener");
         }
         */
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyBus.getInstance().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        MyBus.getInstance().unregister(this);
+        super.onPause();
     }
 
     @Override

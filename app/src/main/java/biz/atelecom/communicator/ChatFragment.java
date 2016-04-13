@@ -13,10 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +26,6 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import biz.atelecom.communicator.adapters.ChatListViewAdapter;
 import biz.atelecom.communicator.adapters.ChatRecyclerViewAdapter;
@@ -176,6 +176,19 @@ public class ChatFragment extends Fragment {
         MyBus.getInstance().register(this);
     }
 
+    /**
+     * Receive message from push services
+     * @param message
+     */
+    @Subscribe
+    public void onReceivePush( Message message) {
+        Log.d("MyApp", "mNumberA:" + mNumberA +  " mNumberB:" + mNumberB);
+        Log.d("MyApp", "from:" + message.from + " to:" + message.to);
+        if(mNumberB.equals(message.from)) {
+            getMessageList();
+        }
+    }
+
     @Override
     public void onPause() {
         MyBus.getInstance().unregister(this);
@@ -234,26 +247,7 @@ public class ChatFragment extends Fragment {
                 mMessageList.clear();
                 for (int i = 0; i < jArray.length(); i++) {
                     jObj = jArray.getJSONObject(i);
-                    message = new Message();
-                    if( jObj.has("I_MESSAGE")){
-                        message.iMessage = jObj.getInt("I_MESSAGE");
-                    }
-                    if( jObj.has("FROM")){
-                        message.from = jObj.getString("FROM");
-                    }
-                    if( jObj.has("TO")){
-                        message.to = jObj.getString("TO");
-                    }
-                    if( jObj.has("BODY")){
-                        message.body = jObj.getString("BODY");
-                    }
-                    if( jObj.has("ISSUE_DATE")){
-                         message.issueDate = sdf.parse( jObj.getString("ISSUE_DATE") );
-                    }
-                    if( jObj.has("VIEWED")){
-                        message.viewed = (jObj.getInt("VIEWED") == 1);
-                    }
-                    mMessageList.add(message);
+                     mMessageList.add(new Message(jObj));
                 }
                 mRecyclerView.setAdapter(new ChatRecyclerViewAdapter( mNumberB, mMessageList));
                 mRecyclerView.scrollToPosition(mMessageList.size() - 1);

@@ -1,9 +1,6 @@
 package biz.atelecom.communicator;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,14 +19,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import biz.atelecom.communicator.ajax.HTTPManager;
 import biz.atelecom.communicator.ajax.RequestPackage;
@@ -42,15 +30,10 @@ public class MainActivity extends AppCompatActivity
 
     public static final String AJAX = "http://psoap.atlantistelecom.net/android/ajax.php";
 
-    public static final String GCM_TOKEN = "gcmToken";
     public static final String ARG_NUMBER = "arg_number";
 
-
-    private String mGcmToken = null;
-
     private static String mNumber = null;
-
-    static String getNumber() {
+    public static String getNumber() {
         return mNumber;
     }
 
@@ -60,10 +43,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                mMessageReceiver, new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
-
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -149,7 +128,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_contacts:
-                newFragment = ContactItemFragment.newInstance(1);
+                newFragment = ContactsFragment.newInstance(1);
                 break;
             case R.id.nav_messages:
                 newFragment = MessagesFragment.newInstance(1);
@@ -167,7 +146,7 @@ public class MainActivity extends AppCompatActivity
                 finish();
 
             default:
-                newFragment = ContactItemFragment.newInstance(1);
+                newFragment = ContactsFragment.newInstance(1);
                 break;
         }
 
@@ -191,17 +170,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            mGcmToken = intent.getStringExtra(GCM_TOKEN);
-
-            Log.d("MyApp", "MainActivity::mMessageReceiver action =" + action + ", mGcmToken =" + mGcmToken);
-        }
-    };
-
-
     @Override
     public void onMessageStatClick(MessageStat item) {
         Log.d("MyApp", "Click1 on: " + item.id);
@@ -211,7 +179,6 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(ChatFragment.ARG_NUMBER_B, item.id);
         startActivity(intent);
     }
-
 
     private void unsetGcmToken(String number, String gsmShortToken) {
         RequestPackage rp = new RequestPackage( MainActivity.AJAX );
@@ -223,6 +190,7 @@ public class MainActivity extends AppCompatActivity
         UnsetGcmTokenAsyncTask task = new UnsetGcmTokenAsyncTask();
         task.execute(rp);
     }
+
     private class UnsetGcmTokenAsyncTask extends AsyncTask<RequestPackage, Void, String> {
         @Override
         protected String doInBackground(RequestPackage... params) {

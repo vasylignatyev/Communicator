@@ -24,7 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/tvContactId"
@@ -32,6 +33,17 @@
                     android:layout_height="wrap_content"
                     android:text="380894123456"
                     android:lines="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="online"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="top"
+                    android:textColor="#7ac832"
+                    android:textAlignment="inherit"
+                    android:textSize="12dp"
+                    android:visibility="gone"
+                    android:id="@+id/tvOnline" />
 
             </LinearLayout>
 

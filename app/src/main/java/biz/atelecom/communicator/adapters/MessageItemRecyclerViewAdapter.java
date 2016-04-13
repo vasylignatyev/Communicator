@@ -12,6 +12,7 @@ import biz.atelecom.communicator.MessagesFragment;
 import biz.atelecom.communicator.R;
 import biz.atelecom.communicator.models.MessageStat;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class MessageItemRecyclerViewAdapter extends RecyclerView.Adapter<MessageItemRecyclerViewAdapter.ViewHolder> {
@@ -35,10 +36,16 @@ public class MessageItemRecyclerViewAdapter extends RecyclerView.Adapter<Message
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MMM");
+
         holder.mItem = mValues.get(position);
         holder.tvContactId.setText(mValues.get(position).id);
         holder.tvMessage.setText(mValues.get(position).body);
-        holder.tvUnviewed.setText( Integer.toString(mValues.get(position).unviewed) );
+        holder.tvUnviewed.setText(Integer.toString(mValues.get(position).unviewed));
+        holder.tvMDate.setText(sdf.format(mValues.get(position).issueDate));
+        if(mValues.get(position).online == 1)
+            holder.tvOnline.setVisibility(View.VISIBLE);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +69,7 @@ public class MessageItemRecyclerViewAdapter extends RecyclerView.Adapter<Message
         public final TextView tvMessage;
         public final TextView tvUnviewed;
         public final TextView tvMDate;
+        public final TextView tvOnline;
 
         public MessageStat mItem;
 
@@ -73,6 +81,7 @@ public class MessageItemRecyclerViewAdapter extends RecyclerView.Adapter<Message
             tvMessage = (TextView) view.findViewById(R.id.tvMessage);
             tvUnviewed = (TextView) view.findViewById(R.id.tvUnviewed);
             tvMDate = (TextView) view.findViewById(R.id.tvMDate);
+            tvOnline = (TextView) view.findViewById(R.id.tvOnline);
         }
         @Override
         public String toString() {

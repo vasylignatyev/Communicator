@@ -27,6 +27,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.squareup.otto.Produce;
+
+import biz.atelecom.communicator.models.Message;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -60,8 +63,8 @@ public class MyGcmListenerService extends GcmListenerService {
         */
         if(MyBus.getInstance().isRegistered()){
             Log.d("MyApp", "app is alive");
-            // //post data
-        }else{
+            MyBus.getInstance().post(new Message(data));
+        } else {
             String numberA = data.getString(ChatFragment.ARG_NUMBER_A);
             String numberB = data.getString(ChatFragment.ARG_NUMBER_B);
             data.putString(ChatFragment.ARG_NUMBER_A,numberB);

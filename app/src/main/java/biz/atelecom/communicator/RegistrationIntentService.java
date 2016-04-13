@@ -36,19 +36,26 @@ import biz.atelecom.communicator.ajax.RequestPackage;
 
 public class RegistrationIntentService extends IntentService {
 
+    public static final String ARG_NUMBER = "number";
+
     private static final String TAG = "MyApp";
     private static final String[] TOPICS = {"global"};
-    SharedPreferences mSharedPreferences;
+    private SharedPreferences mSharedPreferences;
+
+    private String mNumber;
 
     public RegistrationIntentService() {
         super(TAG);
-    }
+     }
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
         if(mSharedPreferences == null) {
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         }
+        mNumber = intent.getStringExtra(ARG_NUMBER);
+
         try {
             // [START register_for_gcm]
             // Initially this call goes out to the network to retrieve the token, subsequent calls
@@ -104,7 +111,7 @@ public class RegistrationIntentService extends IntentService {
         RequestPackage rp = new RequestPackage( MainActivity.AJAX );
         rp.setMethod("GET");
         rp.setParam("functionName", "setGcmToken");
-        rp.setParam("number", MainActivity.getNumber());
+        rp.setParam("number", mNumber );
         rp.setParam("gcm_token", token);
         SetGcmTokenAsyncTask task = new SetGcmTokenAsyncTask();
         task.execute(rp);

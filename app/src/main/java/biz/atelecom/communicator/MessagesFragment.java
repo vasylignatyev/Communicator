@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,24 +128,17 @@ public class MessagesFragment extends Fragment {
             try {
                 jArray = new JSONArray(s);
                 for( int i = 0 ; i < jArray.length(); i++){
-                    MessageStat messageStat = new MessageStat();
 
                     JSONObject jObj = jArray.getJSONObject(i);
+                    MessageStat messageStat = new MessageStat(jObj);
 
-                    if(jObj.has("ID")) {
-                        messageStat.id =jObj.getString("ID");
-                    }
-                    if(jObj.has("BODY")) {
-                        messageStat.body =jObj.getString("BODY");
-                    }
-                    if(jObj.has("UNVIEWED")) {
-                        messageStat.unviewed =jObj.getInt("UNVIEWED");
-                    }
-                    mMessageStatList.add(messageStat);
+                   mMessageStatList.add(messageStat);
                 }
                 mRecyclerView.setAdapter(new MessageItemRecyclerViewAdapter(mMessageStatList, mListener));
 
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }

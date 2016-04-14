@@ -55,7 +55,7 @@
         </activity>
         <activity
             android:name="biz.atelecom.communicator.ChatActivity"
-            android:label="@string/title_activity_chart"
+            android:label="@string/title_activity_chat"
             android:noHistory="false"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>

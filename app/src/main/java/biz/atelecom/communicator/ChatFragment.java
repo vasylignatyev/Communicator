@@ -142,9 +142,11 @@ public class ChatFragment extends Fragment {
         });
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+
         if(toolbar != null) {
-            toolbar.setTitle((mNumberB == null) ? "(Empty)" : mNumberB);
+            toolbar.setTitle("Chat to: " + ((mNumberB == null) ? "(Empty)" : mNumberB) );
         }
+
         if(mNumberB != null) {
             getMessageList();
         }

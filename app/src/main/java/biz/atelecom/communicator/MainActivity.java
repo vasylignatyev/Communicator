@@ -32,6 +32,10 @@ public class MainActivity extends AppCompatActivity
 
     public static final String ARG_NUMBER = "arg_number";
 
+    public static final String MESSAGE_FRAGMENT_TAG = "MESSAGE_FRAGMENT";
+    public static final String CONTACT_FRAGMENT_TAG = "CONTACT_FRAGMENT";
+    public static final String CHAT_FRAGMENT_TAG = "CHAT_FRAGMENT";
+
     private static String mNumber = null;
     public static String getNumber() {
         return mNumber;
@@ -74,15 +78,9 @@ public class MainActivity extends AppCompatActivity
             sp.edit().putString(QuickstartPreferences.REGISTERED_NUMBER, mNumber).apply();
         }
 
-
-
-        //FrameLayout container = (FrameLayout) findViewById(R.id.container);
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         Fragment fragment = MessagesFragment.newInstance(1);
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-
-
+        fragmentManager.beginTransaction().replace(R.id.container, fragment, MESSAGE_FRAGMENT_TAG).commit();
     }
 
     @Override
@@ -91,7 +89,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment fragment = fm.findFragmentByTag(MESSAGE_FRAGMENT_TAG);
+            if (fragment != null && fragment.isVisible()) {
+                Fragment fragmentNew = ContactsFragment.newInstance(1);
+                fm.beginTransaction().replace(R.id.container, fragmentNew, CONTACT_FRAGMENT_TAG).commit();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -125,13 +130,16 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment newFragment;
+        String fragmentTag;
 
         switch (id){
             case R.id.nav_contacts:
                 newFragment = ContactsFragment.newInstance(1);
+                fragmentTag = CONTACT_FRAGMENT_TAG;
                 break;
             case R.id.nav_messages:
                 newFragment = MessagesFragment.newInstance(1);
+                fragmentTag = MESSAGE_FRAGMENT_TAG;
                 break;
             case R.id.nav_quit:
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -147,10 +155,11 @@ public class MainActivity extends AppCompatActivity
 
             default:
                 newFragment = ContactsFragment.newInstance(1);
+                fragmentTag = CONTACT_FRAGMENT_TAG;
                 break;
         }
 
-        fm.beginTransaction().replace(R.id.container, newFragment).commit();
+        fm.beginTransaction().replace(R.id.container, newFragment, fragmentTag).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

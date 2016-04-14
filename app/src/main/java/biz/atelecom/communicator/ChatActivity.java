@@ -24,6 +24,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //toolbar.setTitle("Chat");
         setSupportActionBar(toolbar);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
@@ -69,5 +70,4 @@ public class ChatActivity extends AppCompatActivity {
                 mChatFragment.getMessageList();
         }
     };
-
 }

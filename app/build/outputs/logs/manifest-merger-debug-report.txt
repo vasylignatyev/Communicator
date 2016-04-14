@@ -178,7 +178,7 @@ ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:52:13-56:29
 activity#biz.atelecom.communicator.ChatActivity
 ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:58:9-63:20
 	android:label
-		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:60:13-57
+		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:60:13-56
 	android:noHistory
 		ADDED from C:\android\Communicator\app\src\main\AndroidManifest.xml:62:13-38
 	android:theme

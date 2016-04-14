@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:tag="MESSAGE_FRAGMENT"
     android:id="@+id/list"
     android:name="biz.atelecom.communicator.MassagesFragment"
     android:layout_width="match_parent"

@@ -350,7 +350,7 @@
     <string name="number_hint">Number</string>
     <string name="password_hint">Passsword</string>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <string name="title_activity_chart">Chart</string>
+    <string name="title_activity_chat">Chat</string>
     <string name="title_activity_login">Atlantis</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>

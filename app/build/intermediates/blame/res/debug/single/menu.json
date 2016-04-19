@@ -1,18 +1,18 @@
 [
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_login.xml",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\menu\\menu_login.xml"
+        "merged": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_login.xml",
+        "source": "E:\\Android\\Communicator\\app\\src\\main\\res\\menu\\menu_login.xml"
     },
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\activity_main_drawer.xml",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\menu\\activity_main_drawer.xml"
+        "merged": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_chart.xml",
+        "source": "E:\\Android\\Communicator\\app\\src\\main\\res\\menu\\menu_chart.xml"
     },
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\menu\\main.xml"
+        "merged": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\activity_main_drawer.xml",
+        "source": "E:\\Android\\Communicator\\app\\src\\main\\res\\menu\\activity_main_drawer.xml"
     },
     {
-        "merged": "C:\\android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_chart.xml",
-        "source": "C:\\android\\Communicator\\app\\src\\main\\res\\menu\\menu_chart.xml"
+        "merged": "E:\\Android\\Communicator\\app\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "E:\\Android\\Communicator\\app\\src\\main\\res\\menu\\main.xml"
     }
 ]

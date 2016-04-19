@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import biz.atelecom.communicator.ajax.HTTPManager;
 import biz.atelecom.communicator.ajax.RequestPackage;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity
     public static String getNumber() {
         return mNumber;
     }
+
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +99,20 @@ public class MainActivity extends AppCompatActivity
                 Fragment fragmentNew = ContactsFragment.newInstance(1);
                 fm.beginTransaction().replace(R.id.container, fragmentNew, CONTACT_FRAGMENT_TAG).commit();
             } else {
-                super.onBackPressed();
+                if (doubleBackToExitPressedOnce) {
+                    super.onBackPressed();
+                    return;
+                }
+
+                this.doubleBackToExitPressedOnce = true;
+                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce = false;
+                    }
+                }, 2000);
             }
         }
     }

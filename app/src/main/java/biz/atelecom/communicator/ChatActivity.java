@@ -22,10 +22,13 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MyApp", "ChatActivity: onCreate");
+
         setContentView(R.layout.activity_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setTitle("Chat");
         setSupportActionBar(toolbar);
+
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mNewMessageReceiver, new IntentFilter(QuickstartPreferences.NEW_MESSAGE_RECEIVED));
@@ -48,10 +51,11 @@ public class ChatActivity extends AppCompatActivity {
             numberA  = extras.getString(ChatFragment.ARG_NUMBER_A, null);
             numberB = extras.getString(ChatFragment.ARG_NUMBER_B, null);
         }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        mChatFragment = ChatFragment.newInstance( numberA, numberB);
-        fragmentManager.beginTransaction().replace(R.id.fragment, mChatFragment).commit();
+        if (savedInstanceState == null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            mChatFragment = ChatFragment.newInstance( numberA, numberB);
+            fragmentManager.beginTransaction().add(R.id.fragment, mChatFragment).commit();
+        }
     }
 
     private BroadcastReceiver mNewMessageReceiver = new BroadcastReceiver() {

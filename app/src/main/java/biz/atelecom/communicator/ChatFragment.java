@@ -2,6 +2,7 @@ package biz.atelecom.communicator;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,12 +49,15 @@ public class ChatFragment extends Fragment {
     public static final String ARG_NUMBER_A = "numberA";
     public static final String ARG_BODY = "body";
 
+    private static final String MESSAGE_VALUE = "message_value";
+    private String mSavedMessage = null;
+
     private int mColumnCount = 1;
 
     private String mNumberA;
     private String mNumberB;
 
-    private EditText etMessage;
+    private EditText mEtMessage;
 
     private ProgressDialog pg;
 
@@ -94,10 +98,18 @@ public class ChatFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d("MyApp", "ChatFragment: onCreate");
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT, 1);
             mNumberA = getArguments().getString(ARG_NUMBER_A, null);
             mNumberB = getArguments().getString(ARG_NUMBER_B, null);
+        }
+
+        Log.d("MyApp", "mNumberA: " + mNumberA);
+        if(savedInstanceState != null) {
+            Log.d("MyApp", "onCreate mSavedMessage: " + mSavedMessage);
+            mSavedMessage = savedInstanceState.getString(MESSAGE_VALUE, null);
         }
     }
 
@@ -120,15 +132,20 @@ public class ChatFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
         //mList = (ListView) view.findViewById(R.id.list);
 
-        etMessage = (EditText) view.findViewById(R.id.etMessage);
+        mEtMessage = (EditText) view.findViewById(R.id.etMessage);
+        if(mSavedMessage != null) {
+            Log.d("MyApp", "onCreateView mSavedMessage: " + mSavedMessage);
+            mEtMessage.setText(mSavedMessage);
+        }
+
         final Button btSend = (Button) view.findViewById(R.id.btSend);
         final Button btRefresh = (Button) view.findViewById(R.id.btRefresh);
 
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = etMessage.getText().toString();
-                if(message.length() > 0){
+                String message = mEtMessage.getText().toString();
+                if (message.length() > 0) {
                     sendMessage(message);
                 }
             }
@@ -154,7 +171,6 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -173,6 +189,11 @@ public class ChatFragment extends Fragment {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         MyBus.getInstance().register(this);
@@ -184,7 +205,7 @@ public class ChatFragment extends Fragment {
      */
     @Subscribe
     public void onReceivePush( Message message) {
-        Log.d("MyApp", "mNumberA:" + mNumberA +  " mNumberB:" + mNumberB);
+        Log.d("MyApp", "mNumberA:" + mNumberA + " mNumberB:" + mNumberB);
         Log.d("MyApp", "from:" + message.from + " to:" + message.to);
         if(mNumberB.equals(message.from)) {
             getMessageList();
@@ -195,6 +216,14 @@ public class ChatFragment extends Fragment {
     public void onPause() {
         MyBus.getInstance().unregister(this);
         super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        String etMessage = mEtMessage.getText().toString();
+        outState.putString(MESSAGE_VALUE, etMessage);
+        Log.d("MyApp", "onSaveInstanceState etMessage: " + etMessage);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -289,7 +318,7 @@ public class ChatFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "GetMessageListAsyncTask:" + s);
-            etMessage.setText("");
+            mEtMessage.setText("");
             pg.hide();
             getMessageList();
         }

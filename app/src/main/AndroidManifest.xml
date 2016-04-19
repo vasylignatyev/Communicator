@@ -59,6 +59,7 @@
             android:name=".ChatActivity"
             android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="keyboardHidden|orientation"
             android:noHistory="false">
         </activity>
         <!--

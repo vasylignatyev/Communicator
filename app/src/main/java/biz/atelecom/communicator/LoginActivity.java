@@ -152,7 +152,9 @@ public class LoginActivity extends AppCompatActivity implements
                 JSONObject obj = new JSONObject(s);
                 if(obj.has("result")) {
                     if(obj.getInt("result") == 1) {
+                        Log.d("MyApp", "checkGcmShortToken mNumber:" + mNumber);
                         Intent intent = new Intent(mContext, MainActivity.class);
+                        intent.putExtra(MainActivity.ARG_NUMBER, mNumber);
                         startActivity(intent);
                     } else {
                         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);

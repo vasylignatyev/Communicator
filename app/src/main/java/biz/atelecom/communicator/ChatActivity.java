@@ -33,18 +33,6 @@ public class ChatActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mNewMessageReceiver, new IntentFilter(QuickstartPreferences.NEW_MESSAGE_RECEIVED));
 
-
-        //stoolbar.setTitle("TEST");
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-*/
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {

@@ -125,7 +125,7 @@ public class LoginFragment extends Fragment {
         }
         if(savedInstanceState != null) {
             mTmpPhoneNumber = savedInstanceState.getString(TMP_PHONE_NUMBER);
-            Log.d("MyApp", "mTmpPhoneNumber: " + mTmpPhoneNumber);
+            Log.d("MyApp", "onCreate::mTmpPhoneNumber: " + mTmpPhoneNumber);
         }
     }
 
@@ -145,7 +145,7 @@ public class LoginFragment extends Fragment {
         Button btLogin = (Button) v.findViewById(R.id.btLogin);
 
         if(mTmpPhoneNumber != null) {
-            Log.d("MyApp", "mTmpPhoneNumber: " + mTmpPhoneNumber);
+            Log.d("MyApp", "onCreateView::mTmpPhoneNumber: " + mTmpPhoneNumber);
             mTePhoneNumber.setText(mTmpPhoneNumber);
         }
 
@@ -197,10 +197,10 @@ public class LoginFragment extends Fragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        Log.d("MyApp", "onSaveInstanceState");
+        Log.d("MyApp", "LoginFragment::onSaveInstanceState");
 
         mTmpPhoneNumber = mTePhoneNumber.getText().toString();
-        Log.d("MyApp", "mTmpPhoneNumber: " + mTmpPhoneNumber);
+        Log.d("MyApp", "LoginFragment::onSaveInstanceState mTmpPhoneNumber: " + mTmpPhoneNumber);
         savedInstanceState.putString(TMP_PHONE_NUMBER, mTmpPhoneNumber);
         savedInstanceState.putString("mTePassword", mTePassword.getText().toString());
         savedInstanceState.putBoolean("mCbShowPassword", mCbShowPassword.isChecked());

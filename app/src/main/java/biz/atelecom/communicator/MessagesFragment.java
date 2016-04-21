@@ -95,7 +95,6 @@ public class MessagesFragment extends Fragment {
     }
 
      public interface OnMessageListFragmentListener {
-        // TODO: Update argument type and name
         void onMessageStatClick(MessageStat item);
     }
 

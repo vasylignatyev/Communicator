@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import biz.atelecom.communicator.ajax.HTTPManager;
@@ -51,16 +48,42 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+/**
+ *
+ */
+        Log.d("MyApp", "MainActivity::onCreate");
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        String numberA, numberB;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            numberA  = extras.getString(ChatFragment.ARG_NUMBER_A, null);
+            numberB = extras.getString(ChatFragment.ARG_NUMBER_B, null);
+            mNumber = extras.getString(ARG_NUMBER, null);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+            Log.d("MyApp", "mNumber: " +  mNumber);
+
+            Fragment fragment;
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            String fragmentTag = null;
+
+            if((savedInstanceState == null) && (numberA!=null)&&(numberB!=null)){
+                fragment = ChatFragment.newInstance( numberA, numberB);
+                fragmentTag = CHAT_FRAGMENT_TAG;
+                fragmentManager.beginTransaction().add(R.id.container, fragment, CHAT_FRAGMENT_TAG).commit();
+            } else {
+                if (mNumber == null) {
+                    mNumber = sp.getString(QuickstartPreferences.REGISTERED_NUMBER, null);
+                } else {
+                    sp.edit().putString(QuickstartPreferences.REGISTERED_NUMBER, mNumber).apply();
+                }
+                fragment = MessagesFragment.newInstance(1);
+                fragmentTag = MESSAGE_FRAGMENT_TAG;
             }
-        });
+            fragmentManager.beginTransaction().replace(R.id.container, fragment, fragmentTag).commit();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -70,21 +93,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        Bundle extras = getIntent().getExtras();
-        if(extras != null) {
-            mNumber = extras.getString(ARG_NUMBER, null);
-        }
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        if(mNumber == null) {
-            mNumber = sp.getString(QuickstartPreferences.REGISTERED_NUMBER, null);
-        } else {
-            sp.edit().putString(QuickstartPreferences.REGISTERED_NUMBER, mNumber).apply();
-        }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = MessagesFragment.newInstance(1);
-        fragmentManager.beginTransaction().replace(R.id.container, fragment, MESSAGE_FRAGMENT_TAG).commit();
     }
 
     @Override
@@ -99,20 +107,25 @@ public class MainActivity extends AppCompatActivity
                 Fragment fragmentNew = ContactsFragment.newInstance(1);
                 fm.beginTransaction().replace(R.id.container, fragmentNew, CONTACT_FRAGMENT_TAG).commit();
             } else {
-                if (doubleBackToExitPressedOnce) {
-                    super.onBackPressed();
-                    return;
-                }
-
-                this.doubleBackToExitPressedOnce = true;
-                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        doubleBackToExitPressedOnce = false;
+                fragment = fm.findFragmentByTag(CHAT_FRAGMENT_TAG);
+                if (fragment != null && fragment.isVisible()) {
+                    Fragment fragmentNew = MessagesFragment.newInstance(1);
+                    fm.beginTransaction().replace(R.id.container, fragmentNew, MESSAGE_FRAGMENT_TAG).commit();
+                } else {
+                    if (doubleBackToExitPressedOnce) {
+                        super.onBackPressed();
+                        return;
                     }
-                }, 2000);
+                    this.doubleBackToExitPressedOnce = true;
+                    Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            doubleBackToExitPressedOnce = false;
+                        }
+                    }, 2000);
+                }
             }
         }
     }
@@ -139,7 +152,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -199,11 +211,20 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMessageStatClick(MessageStat item) {
         Log.d("MyApp", "Click1 on: " + item.id);
-
+        /*
         Intent intent = new Intent(this, ChatActivity.class);
         intent.putExtra(ChatFragment.ARG_NUMBER_A, getNumber());
         intent.putExtra(ChatFragment.ARG_NUMBER_B, item.id);
         startActivity(intent);
+        */
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment newFragment;
+        String fragmentTag;
+        newFragment = ChatFragment.newInstance(getNumber(), item.id);
+        fragmentTag = CHAT_FRAGMENT_TAG ;
+        fm.beginTransaction().replace(R.id.container, newFragment, fragmentTag).commit();
+
+
     }
 
     private void unsetGcmToken(String number, String gsmShortToken) {

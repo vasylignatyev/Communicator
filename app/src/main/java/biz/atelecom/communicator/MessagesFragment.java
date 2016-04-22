@@ -58,10 +58,6 @@ public class MessagesFragment extends Fragment {
         }
         getMessageStat();
 
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        if(toolbar != null) {
-            toolbar.setTitle("Messages");
-        }
     }
 
     @Override
@@ -85,6 +81,15 @@ public class MessagesFragment extends Fragment {
 
             throw new RuntimeException(context.toString()
                     + " must implement OnMessageListFragmentListener");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        if(toolbar != null) {
+            toolbar.setTitle("Messages");
         }
     }
 

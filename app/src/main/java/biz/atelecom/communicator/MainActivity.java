@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity
             String fragmentTag = null;
 
             if((savedInstanceState == null) && (numberA!=null)&&(numberB!=null)){
+                mNumber = numberA;
                 fragment = ChatFragment.newInstance( numberA, numberB);
                 fragmentTag = CHAT_FRAGMENT_TAG;
                 fragmentManager.beginTransaction().add(R.id.container, fragment, CHAT_FRAGMENT_TAG).commit();

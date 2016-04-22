@@ -127,10 +127,8 @@ public class ChatFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            //recyclerView.setAdapter(new ChatRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
-        //mList = (ListView) view.findViewById(R.id.list);
 
         mEtMessage = (EditText) view.findViewById(R.id.etMessage);
         if(mSavedMessage != null) {
@@ -154,18 +152,12 @@ public class ChatFragment extends Fragment {
         btRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getMessageList();
+                getMessageList(true);
             }
         });
 
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-
-        if(toolbar != null) {
-            toolbar.setTitle("Chat to: " + ((mNumberB == null) ? "(Empty)" : mNumberB) );
-        }
-
         if(mNumberB != null) {
-            getMessageList();
+            getMessageList(true);
         }
 
         return view;
@@ -178,14 +170,6 @@ public class ChatFragment extends Fragment {
         pg = new ProgressDialog(context);
         pg.setMessage("Wait please ...");
         pg.setTitle("Connecting to server");
-       /*
-        if (context instanceof OnMessageListFragmentListener) {
-            mListener = (OnMessageListFragmentListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnMessageListFragmentListener");
-        }
-        */
     }
 
     @Override
@@ -197,6 +181,11 @@ public class ChatFragment extends Fragment {
     public void onResume() {
         super.onResume();
         MyBus.getInstance().register(this);
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        if(toolbar != null) {
+            toolbar.setTitle("Chat to: " + ((mNumberB == null) ? "(Empty)" : mNumberB) );
+        }
     }
 
     /**
@@ -208,7 +197,7 @@ public class ChatFragment extends Fragment {
         Log.d("MyApp", "mNumberA:" + mNumberA + " mNumberB:" + mNumberB);
         Log.d("MyApp", "from:" + message.from + " to:" + message.to);
         if(mNumberB.equals(message.from)) {
-            getMessageList();
+            getMessageList(true);
         }
     }
 
@@ -250,12 +239,14 @@ public class ChatFragment extends Fragment {
     /**
      *  ASYNC TASKS
      */
-    public void getMessageList() {
+    public void getMessageList(boolean updateViewed) {
         RequestPackage rp = new RequestPackage( MainActivity.AJAX );
         rp.setMethod("GET");
         rp.setParam("functionName", "get_message_list");
         rp.setParam("numberA", mNumberA);
         rp.setParam("numberB", mNumberB);
+        if(updateViewed)
+            rp.setParam("updateViewed", "UPDATE");
         pg.show();
 
         GetMessageListAsyncTask task = new GetMessageListAsyncTask();
@@ -320,7 +311,7 @@ public class ChatFragment extends Fragment {
             Log.d("MyApp", "GetMessageListAsyncTask:" + s);
             mEtMessage.setText("");
             pg.hide();
-            getMessageList();
+            getMessageList(false);
         }
     }
 }

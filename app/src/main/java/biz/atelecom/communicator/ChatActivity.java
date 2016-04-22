@@ -59,7 +59,7 @@ public class ChatActivity extends AppCompatActivity {
             //Log.d("MyApp", "New message from: " + numberB);
 
             if(numberB.equals(senderNumber))
-                mChatFragment.getMessageList();
+                mChatFragment.getMessageList(false);
         }
     };
 }

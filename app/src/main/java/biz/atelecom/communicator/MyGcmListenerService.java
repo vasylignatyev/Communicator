@@ -35,34 +35,14 @@ public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyApp";
 
-    /**
-     * Called when Message is received.
-     *
-     * @param from SenderID of the sender.
-     * @param data Data bundle containing Message data as key/value pairs.
-     *             For Set of keys use data.keySet().
-     */
-    // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("Message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
-/*
-        if (from.startsWith("/topics/")) {
-            // Message received from some topic.
-        } else {
-            // normal downstream Message.
-        }
-*/
-        //SEND BROARCAST
-        /*
-        Intent newMessageReceived = new Intent(QuickstartPreferences.NEW_MESSAGE_RECEIVED);
-        newMessageReceived.putExtras(data);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(newMessageReceived);
-        */
+
         if(MyBus.getInstance().isRegistered()){
-            Log.d("MyApp", "app is alive");
+           // Log.d("MyApp", "app is alive");
             MyBus.getInstance().post(new Message(data));
         } else {
             String numberA = data.getString(ChatFragment.ARG_NUMBER_A);
@@ -71,24 +51,12 @@ public class MyGcmListenerService extends GcmListenerService {
             data.putString(ChatFragment.ARG_NUMBER_B,numberA);
             sendNotification(data);
         }
-        // [START_EXCLUDE]
-        /**
-         * Production applications would usually process the Message here.
-         * Eg: - Syncing with server.
-         *     - Store Message in local database.
-         *     - Update UI.
-         */
 
-        /**
-         * In some cases it may be useful to show a notification indicating to the user
-         * that a Message was received.
-         */
-        // [END_EXCLUDE]
     }
-    // [END receive_message]
 
     private void sendNotification(Bundle data) {
-        Intent intent = new Intent(this, ChatActivity.class);
+        //Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtras(data);
 

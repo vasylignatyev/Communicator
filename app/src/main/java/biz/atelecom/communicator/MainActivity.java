@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity
     public static final String CONTACT_FRAGMENT_TAG = "CONTACT_FRAGMENT";
     public static final String CHAT_FRAGMENT_TAG = "CHAT_FRAGMENT";
 
+    private DrawerLayout mDrawer = null;
+
     private static String mNumber = null;
     public static String getNumber() {
         return mNumber;
@@ -85,11 +87,11 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.container, fragment, fragmentTag).commit();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //drawer.setDrawerListener(toggle);
-        drawer.addDrawerListener(toggle);
+                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        //mDrawer.setDrawerListener(toggle);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -98,9 +100,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
         } else {
             FragmentManager fm = getSupportFragmentManager();
             Fragment fragment = fm.findFragmentByTag(MESSAGE_FRAGMENT_TAG);

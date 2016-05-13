@@ -148,6 +148,9 @@ public class LoginActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String s) {
             Log.d("MyApp", "checkGcmShortToken:" + s);
+            if(s == null) {
+                return;
+            }
             try {
                 JSONObject obj = new JSONObject(s);
                 if(obj.has("result")) {
